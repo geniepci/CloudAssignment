@@ -22,6 +22,15 @@ namespace TopTrumps {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
         /// gameName control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,42 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label gameName;
+        
+        /// <summary>
+        /// Button2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
+        /// Image1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image1;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Image2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image2;
         
         /// <summary>
         /// cardNamePlayerOne control.
@@ -49,22 +94,58 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label cardNamePlayerTwo;
         
         /// <summary>
-        /// Button1 control.
+        /// playerOneButtonOne control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button playerOneButtonOne;
         
         /// <summary>
-        /// attributeOneNamePlayerOne control.
+        /// playerTwoButtonOne control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeOneNamePlayerOne;
+        protected global::System.Web.UI.WebControls.Button playerTwoButtonOne;
+        
+        /// <summary>
+        /// playerOneButtonTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerOneButtonTwo;
+        
+        /// <summary>
+        /// playerTwoButtonTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerTwoButtonTwo;
+        
+        /// <summary>
+        /// playerOneButtonThree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerOneButtonThree;
+        
+        /// <summary>
+        /// playerTwoButtonThree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerTwoButtonThree;
         
         /// <summary>
         /// attributeOneNamePlayerTwo control.
@@ -76,24 +157,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeOneNamePlayerTwo;
         
         /// <summary>
-        /// Button2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
-        
-        /// <summary>
-        /// attributeOneValuePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeOneValuePlayerOne;
-        
-        /// <summary>
         /// attributeOneValuePlayerTwo control.
         /// </summary>
         /// <remarks>
@@ -103,13 +166,22 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeOneValuePlayerTwo;
         
         /// <summary>
-        /// attributeTwoNamePlayerOne control.
+        /// playerOneButtonFour control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeTwoNamePlayerOne;
+        protected global::System.Web.UI.WebControls.Button playerOneButtonFour;
+        
+        /// <summary>
+        /// playerTwoButtonFour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerTwoButtonFour;
         
         /// <summary>
         /// attributeTwoNamePlayerTwo control.
@@ -121,13 +193,22 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeTwoNamePlayerTwo;
         
         /// <summary>
-        /// attributeTwoValuePlayerOne control.
+        /// playerOneButtonFive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeTwoValuePlayerOne;
+        protected global::System.Web.UI.WebControls.Button playerOneButtonFive;
+        
+        /// <summary>
+        /// playerTwoButtonFive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button playerTwoButtonFive;
         
         /// <summary>
         /// attributeTwoValuePlayerTwo control.
@@ -139,24 +220,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeTwoValuePlayerTwo;
         
         /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// attributeThreeNamePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeThreeNamePlayerOne;
-        
-        /// <summary>
         /// attributeThreeNamePlayerTwo control.
         /// </summary>
         /// <remarks>
@@ -164,15 +227,6 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label attributeThreeNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeThreeValuePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeThreeValuePlayerOne;
         
         /// <summary>
         /// attributeThreeValuePlayerTwo control.
@@ -184,15 +238,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeThreeValuePlayerTwo;
         
         /// <summary>
-        /// attributeFourNamePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFourNamePlayerOne;
-        
-        /// <summary>
         /// attributeFourNamePlayerTwo control.
         /// </summary>
         /// <remarks>
@@ -202,15 +247,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label attributeFourNamePlayerTwo;
         
         /// <summary>
-        /// attributeFourValuePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFourValuePlayerOne;
-        
-        /// <summary>
         /// attributeFourValuePlayerTwo control.
         /// </summary>
         /// <remarks>
@@ -218,42 +254,6 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label attributeFourValuePlayerTwo;
-        
-        /// <summary>
-        /// attributeFiveNamePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveNamePlayerOne;
-        
-        /// <summary>
-        /// attributeFiveNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeFiveValuePlayerOne control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveValuePlayerOne;
-        
-        /// <summary>
-        /// attributeFiveValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveValuePlayerTwo;
         
         /// <summary>
         /// ListBox1 control.
@@ -281,5 +281,23 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox ListBox2;
+        
+        /// <summary>
+        /// attributeFiveNamePlayerTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label attributeFiveNamePlayerTwo;
+        
+        /// <summary>
+        /// attributeFiveValuePlayerTwo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label attributeFiveValuePlayerTwo;
     }
 }

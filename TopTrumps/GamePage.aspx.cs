@@ -20,7 +20,7 @@ namespace TopTrumps
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
                 Button3.Visible = false;
-                
+                Button1.Text = "well hello there";
                 //viewstates and sessions appear to be a way of saving variables so they can be used once an event handler is clicked!!!
                 //so would be created once a login has taken place as a way of recalling the user.
 
@@ -64,27 +64,27 @@ namespace TopTrumps
                 //Do we have a list of topics 
 
                 //This is the application data, and would in fact be in our azure tables.
-                List<string> category = new List<string> { "Animals", "Top Speed", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
-                List<string> cardOne = new List<string> { "1", "Monkey", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardTwo = new List<string> { "2", "Kangaroo", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardThree = new List<string> { "3", "Bear", "Picture", "1", "3", "5", "2", "4" };
-                List<string> cardFour = new List<string> { "4", "Elephant", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardFive = new List<string> { "5", "Rabbit", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardSix = new List<string> { "6", "Tiger", "Picture", "4", "5", "3", "2", "1" };
-                List<string> cardSeven = new List<string> { "7", "Hippo", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardEight = new List<string> { "8", "Dog", "Picture", "5", "2", "4", "1", "3" };
-                List<string> cardNine = new List<string> { "9", "Sheep", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardTen = new List<string> { "10", "Cow", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardEleven = new List<string> { "11", "Whale", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardTwelve = new List<string> { "12", "Shark", "Picture", "2", "3", "5", "1", "4" };
-                List<string> cardThirteen = new List<string> { "13", "Lion", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardFourteen = new List<string> { "14", "Horse", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardFifteen = new List<string> { "15", "Cat", "Picture", "4", "5", "1", "2", "3" };
-                List<string> cardSixteen = new List<string> { "16", "Mouse", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardSeventeen = new List<string> { "17", "Crocodile", "Picture", "5", "4", "3", "2", "1" };
-                List<string> cardEighteen = new List<string> { "18", "Zebra", "Picture", "2", "3", "5", "4", "1" };
-                List<string> cardNineteen = new List<string> { "19", "Penguin", "Picture", "1", "2", "3", "4", "5" };
-                List<string> cardTwenty = new List<string> { "20", "Snake", "Picture", "5", "4", "3", "2", "1" };
+                List<string> category = new List<string> { "Animals", "Top Speed(mph)", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
+                List<string> cardOne = new List<string> { "1", "Monkey", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/monkey.jpg" };
+                List<string> cardTwo = new List<string> { "2", "Kangaroo", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/kangaroo.jpg" };
+                List<string> cardThree = new List<string> { "3", "Goat", "Picture", "1", "3", "5", "2", "4", "c:/Users/ashle/Pictures/goat.jpg" };
+                List<string> cardFour = new List<string> { "4", "Elephant", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/elephant.jpg" };
+                List<string> cardFive = new List<string> { "5", "Rabbit", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/rabbit.jpg" };
+                List<string> cardSix = new List<string> { "6", "Giraffe", "Picture", "4", "5", "3", "2", "1", "c:/Users/ashle/Pictures/giraffe.jpg" };
+                List<string> cardSeven = new List<string> { "7", "Hippo", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/hippo.jpg" };
+                List<string> cardEight = new List<string> { "8", "Dog", "Picture", "5", "2", "4", "1", "3", "c:/Users/ashle/Pictures/dog.jpg" };
+                List<string> cardNine = new List<string> { "9", "Sheep", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/sheep.jpg" };
+                List<string> cardTen = new List<string> { "10", "Cow", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/cow.jpg" };
+                List<string> cardEleven = new List<string> { "11", "Rhino", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/rhino.jpg" };
+                List<string> cardTwelve = new List<string> { "12", "Shark", "Picture", "2", "3", "5", "1", "4", "c:/Users/ashle/Pictures/shark.jpg" };
+                List<string> cardThirteen = new List<string> { "13", "Lion", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/lion.jpg" };
+                List<string> cardFourteen = new List<string> { "14", "Horse", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/horse.jpg" };
+                List<string> cardFifteen = new List<string> { "15", "Cat", "Picture", "4", "5", "1", "2", "3", "c:/Users/ashle/Pictures/cat.jpg" };
+                List<string> cardSixteen = new List<string> { "16", "Mouse", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/mouse.jpg" };
+                List<string> cardSeventeen = new List<string> { "17", "Crocodile", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/crocodile.jpg" };
+                List<string> cardEighteen = new List<string> { "18", "Zebra", "Picture", "2", "3", "5", "4", "1", "c:/Users/ashle/Pictures/zebra.jpg" };
+                List<string> cardNineteen = new List<string> { "19", "Penguin", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/penguin.jpg" };
+                List<string> cardTwenty = new List<string> { "20", "Snake", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/snake.jpg" };
 
                 //Then have a list of all the lists. So it is a list where each entry is itself a list
                 List<List<string>> allTheCards = new List<List<string>> { cardOne, cardTwo, cardThree, cardFour, cardFive, cardSix, cardSeven, cardEight, cardNine, cardTen, cardEleven, cardTwelve, cardThirteen, cardFourteen, cardFifteen, cardSixteen, cardSeventeen, cardEighteen, cardNineteen, cardTwenty };
@@ -96,11 +96,14 @@ namespace TopTrumps
 
                 //This populates the names and categories based on the chosen topic      
                 gameName.Text = theCategory[0];
-                attributeOneNamePlayerOne.Text = theCategory[1];
-                attributeTwoNamePlayerOne.Text = theCategory[2];
-                attributeThreeNamePlayerOne.Text = theCategory[3];
-                attributeFourNamePlayerOne.Text = theCategory[4];
-                attributeFiveNamePlayerOne.Text = theCategory[5];
+
+
+
+                //attributeOneNamePlayerOne.Text = theCategory[1];
+                //attributeTwoNamePlayerOne.Text = theCategory[2];
+                //attributeThreeNamePlayerOne.Text = theCategory[3];
+                //attributeFourNamePlayerOne.Text = theCategory[4];
+                //attributeFiveNamePlayerOne.Text = theCategory[5];
 
                 attributeOneNamePlayerTwo.Text = theCategory[1];
                 attributeTwoNamePlayerTwo.Text = theCategory[2];
@@ -122,12 +125,14 @@ namespace TopTrumps
                     int checker = Convert.ToInt16(subList[0]);
                     if (checker == playerOneHand[0])
                     {
+                        Image1.ImageUrl = Convert.ToString(subList[8]);
                         cardNamePlayerOne.Text = subList[1];
-                        attributeOneValuePlayerOne.Text = Convert.ToString(subList[3]);
-                        attributeTwoValuePlayerOne.Text = Convert.ToString(subList[4]);
-                        attributeThreeValuePlayerOne.Text = Convert.ToString(subList[5]);
-                        attributeFourValuePlayerOne.Text = Convert.ToString(subList[6]);
-                        attributeFiveValuePlayerOne.Text = Convert.ToString(subList[7]);
+                        playerOneButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
+                        playerOneButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
+                        playerOneButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
+                        playerOneButtonFour.Text =  theCategory[4] + "  |  " + Convert.ToString(subList[6]);
+                        playerOneButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
+          
 
                     }
                     else { }
@@ -140,6 +145,7 @@ namespace TopTrumps
                     int checker = Convert.ToInt16(subList[0]);
                     if (checker == playerTwoHand[0])
                     {
+                        Image2.ImageUrl = Convert.ToString(subList[8]);
                         cardNamePlayerTwo.Text = subList[1];
                         attributeOneValuePlayerTwo.Text = Convert.ToString(subList[3]);
                         attributeTwoValuePlayerTwo.Text = Convert.ToString(subList[4]);
@@ -214,11 +220,12 @@ namespace TopTrumps
                 if (checker == playerOneHand[0])
                 {
                     cardNamePlayerOne.Text = subList[1];
-                    attributeOneValuePlayerOne.Text = Convert.ToString(subList[3]);
-                    attributeTwoValuePlayerOne.Text = Convert.ToString(subList[4]);
-                    attributeThreeValuePlayerOne.Text = Convert.ToString(subList[5]);
-                    attributeFourValuePlayerOne.Text = Convert.ToString(subList[6]);
-                    attributeFiveValuePlayerOne.Text = Convert.ToString(subList[7]);
+                    Image1.ImageUrl = Convert.ToString(subList[8]);
+                    //attributeOneValuePlayerOne.Text = Convert.ToString(subList[3]);
+                    //attributeTwoValuePlayerOne.Text = Convert.ToString(subList[4]);
+                    //attributeThreeValuePlayerOne.Text = Convert.ToString(subList[5]);
+                    //attributeFourValuePlayerOne.Text = Convert.ToString(subList[6]);
+                    //attributeFiveValuePlayerOne.Text = Convert.ToString(subList[7]);
                 }
                 else { }
             }
@@ -230,6 +237,7 @@ namespace TopTrumps
                 if (checker == playerTwoHand[0])
                 {
                     cardNamePlayerTwo.Text = subList[1];
+                    Image2.ImageUrl = Convert.ToString(subList[8]);
                     attributeOneValuePlayerTwo.Text = Convert.ToString(subList[3]);
                     attributeTwoValuePlayerTwo.Text = Convert.ToString(subList[4]);
                     attributeThreeValuePlayerTwo.Text = Convert.ToString(subList[5]);
