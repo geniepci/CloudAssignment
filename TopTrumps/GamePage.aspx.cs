@@ -10,17 +10,14 @@ namespace TopTrumps
 
 
 {
-
-
     public partial class GamePage : System.Web.UI.Page
     {
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
-                Button3.Visible = false;
-                Button1.Text = "well hello there";
+                nextCard.Visible = false;
                 //viewstates and sessions appear to be a way of saving variables so they can be used once an event handler is clicked!!!
                 //so would be created once a login has taken place as a way of recalling the user.
 
@@ -44,24 +41,7 @@ namespace TopTrumps
                 //Creates session variables playerOneHand that are populated by the lists of the same name
                 Session.Add("playerOneHand", playerOneDeal);
                 Session.Add("playerTwoHand", playerTwoDeal);
-               
-                
-
-
-                ListBox1.Items.Clear();
-                ListBox2.Items.Clear();
-
-                //string trumpGame;
-
-                //Player Info
-                //string player1Name;
-                //string player2Name;
-                //int player1CardsLeft;
-                //int player2CardsLeft;
-
-                //create an array to hold the cards
-
-                //Do we have a list of topics 
+                Session.Add("whoseTurn", "playerOne");
 
                 //This is the application data, and would in fact be in our azure tables.
                 List<string> category = new List<string> { "Animals", "Top Speed(mph)", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
@@ -90,96 +70,67 @@ namespace TopTrumps
                 List<List<string>> allTheCards = new List<List<string>> { cardOne, cardTwo, cardThree, cardFour, cardFive, cardSix, cardSeven, cardEight, cardNine, cardTen, cardEleven, cardTwelve, cardThirteen, cardFourteen, cardFifteen, cardSixteen, cardSeventeen, cardEighteen, cardNineteen, cardTwenty };
                 Session.Add("allCards", allTheCards);
                 Session.Add("gameCategory", category);
+                gameName.Text = category[0];
+                //This calls the PopulateTheScreen method    
+                string callMethod = PopulateTheScreeen();
 
-                List<string> theCategory = Session["gameCategory"] as List<string>;
-
-
-                //This populates the names and categories based on the chosen topic      
-                gameName.Text = theCategory[0];
-
-
-
-                //attributeOneNamePlayerOne.Text = theCategory[1];
-                //attributeTwoNamePlayerOne.Text = theCategory[2];
-                //attributeThreeNamePlayerOne.Text = theCategory[3];
-                //attributeFourNamePlayerOne.Text = theCategory[4];
-                //attributeFiveNamePlayerOne.Text = theCategory[5];
-
-                attributeOneNamePlayerTwo.Text = theCategory[1];
-                attributeTwoNamePlayerTwo.Text = theCategory[2];
-                attributeThreeNamePlayerTwo.Text = theCategory[3];
-                attributeFourNamePlayerTwo.Text = theCategory[4];
-                attributeFiveNamePlayerTwo.Text = theCategory[5];
-
-
-
-                //This compares the identity number at the start of each card with the number in the Player's Hand 
-                //and then if there is a match it then takes the data needed.
-                List<int> playerOneHand = Session["playerOneHand"] as List<int>;
-                List<int> playerTwoHand = Session["playerTwoHand"] as List<int>;
-                List<List<string>> allCards = Session["allCards"] as List<List<string>>;
-
-                foreach (List<string> subList in allCards)
-                {
-
-                    int checker = Convert.ToInt16(subList[0]);
-                    if (checker == playerOneHand[0])
-                    {
-                        Image1.ImageUrl = Convert.ToString(subList[8]);
-                        cardNamePlayerOne.Text = subList[1];
-                        playerOneButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
-                        playerOneButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
-                        playerOneButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
-                        playerOneButtonFour.Text =  theCategory[4] + "  |  " + Convert.ToString(subList[6]);
-                        playerOneButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
-          
-
-                    }
-                    else { }
-                }
-
-
-                //Then does the same for player two
-                foreach (List<string> subList in allCards)
-                {
-                    int checker = Convert.ToInt16(subList[0]);
-                    if (checker == playerTwoHand[0])
-                    {
-                        Image2.ImageUrl = Convert.ToString(subList[8]);
-                        cardNamePlayerTwo.Text = subList[1];
-                        attributeOneValuePlayerTwo.Text = Convert.ToString(subList[3]);
-                        attributeTwoValuePlayerTwo.Text = Convert.ToString(subList[4]);
-                        attributeThreeValuePlayerTwo.Text = Convert.ToString(subList[5]);
-                        attributeFourValuePlayerTwo.Text = Convert.ToString(subList[6]);
-                        attributeFiveValuePlayerTwo.Text = Convert.ToString(subList[7]);
-                    }
-                    else { }
-                }
-
-
-                //This puts the 'cards' in each players hand into the listboxes, so we can check it is working
-                foreach (int t in playerOneHand)
-                {
-                    ListBox1.Items.Add(Convert.ToString(t));
-                }
-
-                foreach (int t in playerTwoHand)
-                {
-                    ListBox2.Items.Add(Convert.ToString(t));
-                }
             }
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+
+
+
+
+        private string CheckWhoHasWon(int selection)
         {
+            List<int> playerOneCard= Session["playerOneCard"] as List<int>;
+            int playerOneValue = playerOneCard[selection];
+            List<int> playerTwoCard = Session["playerTwoCard"] as List<int>;
+            int playerTwoValue = playerTwoCard[selection];
+
+            if (playerOneValue > playerTwoValue)
+            {
+                string callMethodP1Wins = PlayerOneWins();
+                if (callMethodP1Wins =="playerOne")
+                {
+                    Label1.Visible = true;
+                    Label1.Text = "Player 1 Wins";
+                    return "playerOne";
+                }
+                Label1.Visible = true;
+                Label1.Text = "Player 1 Wins";
+                return string.Empty;
+            }
+          
+
+            if (playerOneValue < playerTwoValue)
+            {
+                string callMethodP2Wins = PlayerTwoWins();
+                Label1.Visible = true;
+                Label1.Text = "Player 2 Wins";
+                return string.Empty;
+            }
+   
+            if (playerOneValue == playerTwoValue)
+            {
+                Label1.Text = "Draw";
+                Label1.Visible = true;
+                string callMethodDraw = Draw();
+                return string.Empty;
+            }
+            else
+            {
+                return string.Empty;
+            }
 
 
+            
+            
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+
+        private string PlayerOneWins()
         {
-            //PlayerOneWins
-            Label1.Text = "PLAYER 1 WINS";
             //First declare new lists playerOne and playerTwo updates and assign them to the session values for the hands
             List<int> playerOneUpdate = Session["playerOneHand"] as List<int>;
             List<int> playerTwoUpdate = Session["playerTwoHand"] as List<int>;
@@ -198,64 +149,396 @@ namespace TopTrumps
             //Updates the sessions with the new decks.
             Session.Add("playerOneHand", playerOneUpdate);
             Session.Add("playerTwoHand", playerTwoUpdate);
+            //Then makes it Player One's turn
+            Session.Remove("whoseTurn");
+            Session.Add("whoseTurn", "playerOne");
+            if (playerTwoUpdate.Count == 0)
+            {
+                return "playerOne";
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
+            
+        }
+
+        private string PlayerTwoWins()
+        {
+            //First declare new lists playerOne and playerTwo updates and assign them to the session values for the hands
+            List<int> playerOneUpdate = Session["playerOneHand"] as List<int>;
+            List<int> playerTwoUpdate = Session["playerTwoHand"] as List<int>;
+            //Take the first card for both playerOne and playerTwo
+            int firstCard = playerOneUpdate[0];
+            int secondCard = playerTwoUpdate[0];
+            //Remove the first card from the list of playerOne and playerTwo
+            playerOneUpdate.RemoveAt(0);
+            playerTwoUpdate.RemoveAt(0);
+            //Add each card to the back of playerOne's deck
+            playerTwoUpdate.Add(secondCard);
+            playerTwoUpdate.Add(firstCard);
+            //Cleans the playerOneHand and playerTwoHand sessions
+            Session.Remove("playerOneHand");
+            Session.Remove("playerTwoHand");
+            //Updates the sessions with the new decks.
+            Session.Add("playerOneHand", playerOneUpdate);
+            Session.Add("playerTwoHand", playerTwoUpdate);
+            //Then makes it Player Two's turn
+            Session.Remove("whoseTurn");
+            Session.Add("whoseTurn", "playerTwo");
+
+            return string.Empty;
+        }
+
+        private string Draw()
+        {
+            //First declare new lists playerOne and playerTwo updates and assign them to the session values for the hands
+            List<int> playerOneUpdate = Session["playerOneHand"] as List<int>;
+            List<int> playerTwoUpdate = Session["playerTwoHand"] as List<int>;
+            //Take the first card for both playerOne and playerTwo
+            int firstCard = playerOneUpdate[0];
+            int secondCard = playerTwoUpdate[0];
+            //Remove the first card from the list of playerOne and playerTwo
+            playerOneUpdate.RemoveAt(0);
+            playerTwoUpdate.RemoveAt(0);
+            //Add each card to the back of playerOne's deck
+            playerOneUpdate.Add(firstCard);
+            playerTwoUpdate.Add(secondCard);
+            //Cleans the playerOneHand and playerTwoHand sessions
+            Session.Remove("playerOneHand");
+            Session.Remove("playerTwoHand");
+            //Updates the sessions with the new decks.
+            Session.Add("playerOneHand", playerOneUpdate);
+            Session.Add("playerTwoHand", playerTwoUpdate);
+
+            return string.Empty;
+        }
+
+        private string DisableButtons()
+        {
+            //This simply stops the buttons being clicked again once selected
+            playerOneButtonOne.Enabled = false;
+            playerOneButtonTwo.Enabled = false;
+            playerOneButtonThree.Enabled = false;
+            playerOneButtonFour.Enabled = false;
+            playerOneButtonFive.Enabled = false;
+            playerTwoButtonOne.Enabled = false;
+            playerTwoButtonTwo.Enabled = false;
+            playerTwoButtonThree.Enabled = false;
+            playerTwoButtonFour.Enabled = false;
+            playerTwoButtonFive.Enabled = false;
+            return string.Empty;
+        }
+
+        private string EnableButtons()
+        {
+            playerOneButtonOne.Enabled = true;
+            playerOneButtonOne.BackColor = System.Drawing.Color.Empty;
+            playerOneButtonOne.ForeColor = System.Drawing.Color.Empty;
+            playerOneButtonTwo.Enabled = true;
+            playerOneButtonTwo.BackColor = System.Drawing.Color.Empty;
+            playerOneButtonTwo.ForeColor = System.Drawing.Color.Empty;
+            playerOneButtonThree.Enabled = true;
+            playerOneButtonThree.BackColor = System.Drawing.Color.Empty;
+            playerOneButtonThree.ForeColor = System.Drawing.Color.Empty;
+            playerOneButtonFour.Enabled = true;
+            playerOneButtonFour.BackColor = System.Drawing.Color.Empty;
+            playerOneButtonFour.ForeColor = System.Drawing.Color.Empty;
+            playerOneButtonFive.Enabled = true;
+            playerOneButtonFive.BackColor = System.Drawing.Color.Empty;
+            playerOneButtonFive.ForeColor = System.Drawing.Color.Empty;
+            playerTwoButtonOne.Enabled = true;
+            playerTwoButtonOne.BackColor = System.Drawing.Color.Empty;
+            playerTwoButtonOne.ForeColor = System.Drawing.Color.Empty;
+            playerTwoButtonTwo.Enabled = true;
+            playerTwoButtonTwo.BackColor = System.Drawing.Color.Empty;
+            playerTwoButtonTwo.ForeColor = System.Drawing.Color.Empty;
+            playerTwoButtonThree.Enabled = true;
+            playerTwoButtonThree.BackColor = System.Drawing.Color.Empty;
+            playerTwoButtonThree.ForeColor = System.Drawing.Color.Empty;
+            playerTwoButtonFour.Enabled = true;
+            playerTwoButtonFour.BackColor = System.Drawing.Color.Empty;
+            playerTwoButtonFour.ForeColor = System.Drawing.Color.Empty;
+            playerTwoButtonFive.Enabled = true;
+            playerTwoButtonFive.BackColor = System.Drawing.Color.Empty;
+            playerTwoButtonFive.ForeColor = System.Drawing.Color.Empty;
+            return string.Empty;
+        }
+
+        private string EverythingVisible()
+        {
+            Image1.Visible = true;
+            Image2.Visible = true;
+            cardNamePlayerOne.Visible = true;
+            cardNamePlayerTwo.Visible = true;
+            playerOneButtonOne.Visible = true;
+            playerOneButtonTwo.Visible = true;
+            playerOneButtonThree.Visible = true;
+            playerOneButtonFour.Visible = true;
+            playerOneButtonFive.Visible = true;
+            playerTwoButtonOne.Visible = true;
+            playerTwoButtonTwo.Visible = true;
+            playerTwoButtonThree.Visible = true;
+            playerTwoButtonFour.Visible = true;
+            playerTwoButtonFive.Visible = true;
+            return string.Empty;
+        }
+
+        private string PopulateTheScreeen()
+        {
+            //This compares the identity number at the start of each card with the number in the Player's Hand 
+            //and then if there is a match it then takes the data needed.
+            List<string> theCategory = Session["gameCategory"] as List<string>;
+            List<int> playerOneHand = Session["playerOneHand"] as List<int>;
+            List<int> playerTwoHand = Session["playerTwoHand"] as List<int>;
+            List<List<string>> allCards = Session["allCards"] as List<List<string>>;
+
+            foreach (List<string> subList in allCards)
+            {
+                int checker = Convert.ToInt16(subList[0]);
+                if (checker == playerOneHand[0])
+                {
+                    Image1.ImageUrl = Convert.ToString(subList[8]);
+                    cardNamePlayerOne.Text = subList[1];
+                    playerOneButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
+                    playerOneButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
+                    playerOneButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
+                    playerOneButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(subList[6]);
+                    playerOneButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
+                    List<int> playerOneCard = new List<int> { Convert.ToInt16(subList[3]), Convert.ToInt16(subList[4]), Convert.ToInt16(subList[5]), Convert.ToInt16(subList[6]), Convert.ToInt16(subList[7]), };
+                    Session.Add("playerOneCard", playerOneCard);
+
+
+                }
+                else { }
+            }
+
+
+            //Then does the same for player two
+            foreach (List<string> subList in allCards)
+            {
+                int checker = Convert.ToInt16(subList[0]);
+                if (checker == playerTwoHand[0])
+                {
+                    Image2.ImageUrl = Convert.ToString(subList[8]);
+                    cardNamePlayerTwo.Text = subList[1];
+                    playerTwoButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
+                    playerTwoButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
+                    playerTwoButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
+                    playerTwoButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(subList[6]);
+                    playerTwoButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
+                    List<int> playerTwoCard = new List<int> { Convert.ToInt16(subList[3]), Convert.ToInt16(subList[4]), Convert.ToInt16(subList[5]), Convert.ToInt16(subList[6]), Convert.ToInt16(subList[7]), };
+                    Session.Add("playerTwoCard", playerTwoCard);
+                }
+                else { }
+            }
+
+
+            //It then makes the non-player's cards invisible
+            string turn = Session["whoseTurn"] as string;
+            if (turn == "playerOne")
+            {
+                Image2.Visible = false;
+                cardNamePlayerTwo.Visible = false;
+                playerTwoButtonOne.Visible = false;
+                playerTwoButtonTwo.Visible = false;
+                playerTwoButtonThree.Visible = false;
+                playerTwoButtonFour.Visible = false;
+                playerTwoButtonFive.Visible = false;
+            }
+            else { }
+            if (turn == "playerTwo")
+            {
+                Image1.Visible = false;
+                cardNamePlayerOne.Visible = false;
+                playerOneButtonOne.Visible = false;
+                playerOneButtonTwo.Visible = false;
+                playerOneButtonThree.Visible = false;
+                playerOneButtonFour.Visible = false;
+                playerOneButtonFive.Visible = false;
+            }
+            else { }
+
+
             //It clears then updates the output box
             ListBox1.Items.Clear();
             ListBox2.Items.Clear();
-            foreach (int t in playerOneUpdate)
+            //This puts the 'cards' in each players hand into the listboxes, so we can check it is working
+            foreach (int t in playerOneHand)
             {
                 ListBox1.Items.Add(Convert.ToString(t));
             }
 
-            foreach (int t in playerTwoUpdate)
+            foreach (int t in playerTwoHand)
             {
                 ListBox2.Items.Add(Convert.ToString(t));
             }
+            return string.Empty;
+        }
 
-            List<List<string>> allCards = Session["allCards"] as List<List<string>>;
-            //Finally repopulates the textboxes with the next cards
-            foreach (List<string> subList in allCards)
+        protected void nextCard_Click(object sender, EventArgs e)
+        {
+            Label1.Visible = false;
+            nextCard.Visible = false;
+            string callMethod = EnableButtons();
+            string callMethod1 = PopulateTheScreeen();
+        }
+
+        protected void playerOneButtonOne_Click(object sender, EventArgs e)
+        {
+
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(0);
+            if (theWinner == "playerOne")
             {
-                List<int> playerOneHand = Session["playerOneHand"] as List<int>;
-                int checker = Convert.ToInt16(subList[0]);
-                if (checker == playerOneHand[0])
-                {
-                    cardNamePlayerOne.Text = subList[1];
-                    Image1.ImageUrl = Convert.ToString(subList[8]);
-                    //attributeOneValuePlayerOne.Text = Convert.ToString(subList[3]);
-                    //attributeTwoValuePlayerOne.Text = Convert.ToString(subList[4]);
-                    //attributeThreeValuePlayerOne.Text = Convert.ToString(subList[5]);
-                    //attributeFourValuePlayerOne.Text = Convert.ToString(subList[6]);
-                    //attributeFiveValuePlayerOne.Text = Convert.ToString(subList[7]);
-                }
-                else { }
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER ONE WINS!!!!";
             }
-            //Then does the same for player two
-            foreach (List<string> subList in allCards)
+            else
             {
-                List<int> playerTwoHand = Session["playerTwoHand"] as List<int>;
-                int checker = Convert.ToInt16(subList[0]);
-                if (checker == playerTwoHand[0])
-                {
-                    cardNamePlayerTwo.Text = subList[1];
-                    Image2.ImageUrl = Convert.ToString(subList[8]);
-                    attributeOneValuePlayerTwo.Text = Convert.ToString(subList[3]);
-                    attributeTwoValuePlayerTwo.Text = Convert.ToString(subList[4]);
-                    attributeThreeValuePlayerTwo.Text = Convert.ToString(subList[5]);
-                    attributeFourValuePlayerTwo.Text = Convert.ToString(subList[6]);
-                    attributeFiveValuePlayerTwo.Text = Convert.ToString(subList[7]);
-                }
-                else { }
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonOne.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonOne.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonOne.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonOne.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
             }
-
-            Button3.Visible = true;
-
 
         }
 
-        protected void Button3_Click(object sender, EventArgs e)
+        protected void playerOneButtonTwo_Click(object sender, EventArgs e)
         {
-            Button3.Visible = false;
 
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(1);
+            if (theWinner == "playerOne")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER ONE WINS!!!!";
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonTwo.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonTwo.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonTwo.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonTwo.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
+            
+
+        }
+
+        protected void playerOneButtonThree_Click(object sender, EventArgs e)
+        {
+
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(2);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerOneButtonFour_Click(object sender, EventArgs e)
+        {
+
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(3);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerOneButtonFive_Click(object sender, EventArgs e)
+        {
+
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(4);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerTwoButtonOne_Click(object sender, EventArgs e)
+        {
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(0);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonOne.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonOne.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonOne.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonOne.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerTwoButtonTwo_Click(object sender, EventArgs e)
+        {
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(1);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonTwo.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonTwo.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonTwo.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonTwo.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerTwoButtonThree_Click(object sender, EventArgs e)
+        {
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(2);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerTwoButtonFour_Click(object sender, EventArgs e)
+        {
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(3);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
+        }
+
+        protected void playerTwoButtonFive_Click(object sender, EventArgs e)
+        {
+            //Calls the mether CheckWHoHasWon - to see who the winner is
+            string theWinner = CheckWhoHasWon(4);
+            string callMethod1 = DisableButtons();
+            string callMethod2 = EverythingVisible();
+            playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
+            playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
+            playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
+            playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
+            nextCard.Visible = true;
         }
     }
 

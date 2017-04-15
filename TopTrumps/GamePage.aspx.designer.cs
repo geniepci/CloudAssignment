@@ -22,15 +22,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
         /// gameName control.
         /// </summary>
         /// <remarks>
@@ -40,13 +31,13 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label gameName;
         
         /// <summary>
-        /// Button2 control.
+        /// ListBox1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.ListBox ListBox1;
         
         /// <summary>
         /// Image1 control.
@@ -67,6 +58,15 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
         /// Image2 control.
         /// </summary>
         /// <remarks>
@@ -74,6 +74,15 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image Image2;
+        
+        /// <summary>
+        /// ListBox2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox ListBox2;
         
         /// <summary>
         /// cardNamePlayerOne control.
@@ -148,24 +157,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Button playerTwoButtonThree;
         
         /// <summary>
-        /// attributeOneNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeOneNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeOneValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeOneValuePlayerTwo;
-        
-        /// <summary>
         /// playerOneButtonFour control.
         /// </summary>
         /// <remarks>
@@ -184,15 +175,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Button playerTwoButtonFour;
         
         /// <summary>
-        /// attributeTwoNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeTwoNamePlayerTwo;
-        
-        /// <summary>
         /// playerOneButtonFive control.
         /// </summary>
         /// <remarks>
@@ -202,6 +184,15 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Button playerOneButtonFive;
         
         /// <summary>
+        /// nextCard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button nextCard;
+        
+        /// <summary>
         /// playerTwoButtonFive control.
         /// </summary>
         /// <remarks>
@@ -209,95 +200,5 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button playerTwoButtonFive;
-        
-        /// <summary>
-        /// attributeTwoValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeTwoValuePlayerTwo;
-        
-        /// <summary>
-        /// attributeThreeNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeThreeNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeThreeValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeThreeValuePlayerTwo;
-        
-        /// <summary>
-        /// attributeFourNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFourNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeFourValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFourValuePlayerTwo;
-        
-        /// <summary>
-        /// ListBox1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox1;
-        
-        /// <summary>
-        /// Button3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
-        
-        /// <summary>
-        /// ListBox2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox2;
-        
-        /// <summary>
-        /// attributeFiveNamePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveNamePlayerTwo;
-        
-        /// <summary>
-        /// attributeFiveValuePlayerTwo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label attributeFiveValuePlayerTwo;
     }
 }
