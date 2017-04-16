@@ -220,7 +220,9 @@
                 <td class="auto-style39">
                     <asp:Button ID="playerOneButtonOne" runat="server" Text="Button" Height="40px" Width="250px" OnClick="playerOneButtonOne_Click" />
                 </td>
-                <td class="auto-style35"></td>
+                <td class="auto-style35">
+                    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+                </td>
                 <td class="auto-style44">
                     <asp:Button ID="playerTwoButtonOne" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerTwoButtonOne_Click" />
                 </td>

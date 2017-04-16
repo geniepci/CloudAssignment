@@ -21,6 +21,10 @@ namespace TopTrumps
                 string callMethod = RunGame();
 
             }
+            else
+            {
+
+            }
         }
 
 
@@ -37,7 +41,6 @@ namespace TopTrumps
             if (playerOneValue > playerTwoValue)
             {
                 string callMethodP1Wins = PlayerOneWins();
-                Label1.Visible = true;
                 Label1.Text = "Player 1 Wins";
                 if (callMethodP1Wins == "playerOne")
                 {
@@ -54,7 +57,6 @@ namespace TopTrumps
             if (playerOneValue < playerTwoValue)
             {
                 string callMethodP2Wins = PlayerTwoWins();
-                Label1.Visible = true;
                 Label1.Text = "Player 2 Wins";
                 if (callMethodP2Wins == "playerTwo")
                 {
@@ -69,7 +71,6 @@ namespace TopTrumps
             if (playerOneValue == playerTwoValue)
             {
                 Label1.Text = "Draw";
-                Label1.Visible = true;
                 string callMethodDraw = Draw();
                 return string.Empty;
             }
@@ -340,7 +341,7 @@ namespace TopTrumps
 
         protected void nextCard_Click(object sender, EventArgs e)
         {
-            Label1.Visible = false;
+            Label1.Text = "";
             nextCard.Visible = false;
             string callMethod = EnableButtons();
             string callMethod1 = PopulateTheScreeen();
@@ -546,7 +547,7 @@ namespace TopTrumps
                 string callMethod1 = DisableButtons();
                 string callMethod2 = EverythingVisible();
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
-                playAgain.Visible = true;
+                string callMethod3 = GameOver();
             }
             else
             {
@@ -556,7 +557,7 @@ namespace TopTrumps
                 playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
                 playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
                 playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
-                string callMethod3 = GameOver();
+
             }
         }
 
@@ -653,7 +654,6 @@ namespace TopTrumps
 
         protected void playAgain_Click(object sender, EventArgs e)
         {
-            playAgain.Visible = false;
             Session.Remove("playerOneCard");
             Session.Remove("playerTwoCard");
             Session.Remove("playerOneHand");
@@ -661,8 +661,8 @@ namespace TopTrumps
             Session.Remove("whoseTurn");
             Session.Remove("allCards");
             Session.Remove("gameCategory");
-            Label1.Visible = false;
-            Label2.Visible = false;
+            Label1.Text = "";
+            Label2.Text = "";
             string method = EnableButtons();
             string method1 = RunGame();
         }
