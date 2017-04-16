@@ -134,6 +134,15 @@
             background-color: #FFFFFF;
             text-align: center;
         }
+        .auto-style48 {
+            width: 274px;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: xx-large;
+            color: #0000FF;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -142,7 +151,7 @@
             <tr>
                 <td class="auto-style25">&nbsp;</td>
                 <td class="auto-style38">&nbsp;</td>
-                <td class="auto-style17">TOP TRUMPS</td>
+                <td class="auto-style48" colspan="1">TOP TRUMPS</td>
                 <td class="auto-style43">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -151,7 +160,7 @@
                 <td class="auto-style38">
                     &nbsp;</td>
                 <td class="auto-style17">
-                    <asp:Label ID="gameName" runat="server"></asp:Label>
+                    <asp:Label ID="gameName" runat="server" Font-Size="X-Large" ForeColor="#33CC33"></asp:Label>
                 </td>
                 <td class="auto-style43">
                     &nbsp;</td>
@@ -177,8 +186,8 @@
                     <asp:Image ID="Image1" runat="server" Height="250px" Width="250px" />
                 </td>
                 <td class="auto-style17">
-                    <asp:Label ID="Label1" runat="server"></asp:Label>
-                    <asp:Label ID="Label2" runat="server"></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
                 </td>
                 <td class="auto-style43">
                     <asp:Image ID="Image2" runat="server" Height="250px" Width="250px" />
@@ -300,6 +309,7 @@
                 </td>
                 <td class="auto-style18">
                     <asp:Button ID="nextCard" runat="server" OnClick="nextCard_Click" Text="NEXT CARD" Height="40px" Width="250px"/>
+                    <asp:Button ID="playAgain" runat="server" Height="40px" OnClick="playAgain_Click" Text="PLAY AGAIN" Width="250px" />
                 </td>
                 <td class="auto-style45">
                     <asp:Button ID="playerTwoButtonFive" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerTwoButtonFive_Click" />

@@ -94,10 +94,24 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cat.jpg" />
+    <Content Include="cow.jpg" />
+    <Content Include="crocodile.jpg" />
+    <Content Include="dog.jpg" />
+    <Content Include="elephant.jpg" />
+    <Content Include="giraffe.jpg" />
+    <Content Include="goat.jpg" />
+    <Content Include="hippo.jpg" />
+    <Content Include="horse.jpg" />
+    <Content Include="kangaroo.jpg" />
+    <Content Include="lion.jpg" />
+    <Content Include="monkey.jpg" />
+    <Content Include="mouse.jpg" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="zebra.jpg" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -107,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GamePage.aspx" />
+    <Content Include="penguin.jpg" />
+    <Content Include="rabbit.jpg" />
+    <Content Include="rhino.jpg" />
+    <Content Include="shark.jpg" />
+    <Content Include="sheep.jpg" />
+    <Content Include="snake.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -17,62 +17,8 @@ namespace TopTrumps
         {
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
-                nextCard.Visible = false;
-                //viewstates and sessions appear to be a way of saving variables so they can be used once an event handler is clicked!!!
-                //so would be created once a login has taken place as a way of recalling the user.
-
-                //creates an instance of the class DealCards
-                DealCards myCards = new DealCards();
-                //calls the method GenerateCards to create the random pack of 20
-                List<int> cards = myCards.GenerateCards();
-                //creates two lists for each player's cards
-                List<int> playerOneDeal = new List<int> { };
-                List<int> playerTwoDeal = new List<int> { };
-                //Then distributes the cards between Player1 and Player2
-                int loopNo = cards.Count - 1;
-                while (loopNo > -1)
-                {
-                    playerOneDeal.Add(cards[loopNo]);
-                    loopNo = loopNo - 1;
-                    playerTwoDeal.Add(cards[loopNo]);
-                    loopNo = loopNo - 1;
-                }
-
-                //Creates session variables playerOneHand that are populated by the lists of the same name
-                Session.Add("playerOneHand", playerOneDeal);
-                Session.Add("playerTwoHand", playerTwoDeal);
-                Session.Add("whoseTurn", "playerOne");
-
-                //This is the application data, and would in fact be in our azure tables.
-                List<string> category = new List<string> { "Animals", "Top Speed(mph)", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
-                List<string> cardOne = new List<string> { "1", "Monkey", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/monkey.jpg" };
-                List<string> cardTwo = new List<string> { "2", "Kangaroo", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/kangaroo.jpg" };
-                List<string> cardThree = new List<string> { "3", "Goat", "Picture", "1", "3", "5", "2", "4", "c:/Users/ashle/Pictures/goat.jpg" };
-                List<string> cardFour = new List<string> { "4", "Elephant", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/elephant.jpg" };
-                List<string> cardFive = new List<string> { "5", "Rabbit", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/rabbit.jpg" };
-                List<string> cardSix = new List<string> { "6", "Giraffe", "Picture", "4", "5", "3", "2", "1", "c:/Users/ashle/Pictures/giraffe.jpg" };
-                List<string> cardSeven = new List<string> { "7", "Hippo", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/hippo.jpg" };
-                List<string> cardEight = new List<string> { "8", "Dog", "Picture", "5", "2", "4", "1", "3", "c:/Users/ashle/Pictures/dog.jpg" };
-                List<string> cardNine = new List<string> { "9", "Sheep", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/sheep.jpg" };
-                List<string> cardTen = new List<string> { "10", "Cow", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/cow.jpg" };
-                List<string> cardEleven = new List<string> { "11", "Rhino", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/rhino.jpg" };
-                List<string> cardTwelve = new List<string> { "12", "Shark", "Picture", "2", "3", "5", "1", "4", "c:/Users/ashle/Pictures/shark.jpg" };
-                List<string> cardThirteen = new List<string> { "13", "Lion", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/lion.jpg" };
-                List<string> cardFourteen = new List<string> { "14", "Horse", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/horse.jpg" };
-                List<string> cardFifteen = new List<string> { "15", "Cat", "Picture", "4", "5", "1", "2", "3", "c:/Users/ashle/Pictures/cat.jpg" };
-                List<string> cardSixteen = new List<string> { "16", "Mouse", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/mouse.jpg" };
-                List<string> cardSeventeen = new List<string> { "17", "Crocodile", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/crocodile.jpg" };
-                List<string> cardEighteen = new List<string> { "18", "Zebra", "Picture", "2", "3", "5", "4", "1", "c:/Users/ashle/Pictures/zebra.jpg" };
-                List<string> cardNineteen = new List<string> { "19", "Penguin", "Picture", "1", "2", "3", "4", "5", "c:/Users/ashle/Pictures/penguin.jpg" };
-                List<string> cardTwenty = new List<string> { "20", "Snake", "Picture", "5", "4", "3", "2", "1", "c:/Users/ashle/Pictures/snake.jpg" };
-
-                //Then have a list of all the lists. So it is a list where each entry is itself a list
-                List<List<string>> allTheCards = new List<List<string>> { cardOne, cardTwo, cardThree, cardFour, cardFive, cardSix, cardSeven, cardEight, cardNine, cardTen, cardEleven, cardTwelve, cardThirteen, cardFourteen, cardFifteen, cardSixteen, cardSeventeen, cardEighteen, cardNineteen, cardTwenty };
-                Session.Add("allCards", allTheCards);
-                Session.Add("gameCategory", category);
-                gameName.Text = category[0];
-                //This calls the PopulateTheScreen method    
-                string callMethod = PopulateTheScreeen();
+    
+                string callMethod = RunGame();
 
             }
         }
@@ -87,30 +33,39 @@ namespace TopTrumps
             int playerOneValue = playerOneCard[selection];
             List<int> playerTwoCard = Session["playerTwoCard"] as List<int>;
             int playerTwoValue = playerTwoCard[selection];
-
+            //Runs three checks - firstly that Player One is the winner
             if (playerOneValue > playerTwoValue)
             {
                 string callMethodP1Wins = PlayerOneWins();
-                if (callMethodP1Wins =="playerOne")
-                {
-                    Label1.Visible = true;
-                    Label1.Text = "Player 1 Wins";
-                    return "playerOne";
-                }
                 Label1.Visible = true;
                 Label1.Text = "Player 1 Wins";
-                return string.Empty;
+                if (callMethodP1Wins == "playerOne")
+                {
+                    return "playerOne";
+                }
+                else
+                {
+                    return string.Empty;
+                }
+
             }
           
-
+            //Then checks if Player Two is the winner
             if (playerOneValue < playerTwoValue)
             {
                 string callMethodP2Wins = PlayerTwoWins();
                 Label1.Visible = true;
                 Label1.Text = "Player 2 Wins";
-                return string.Empty;
+                if (callMethodP2Wins == "playerTwo")
+                {
+                    return "playerTwo";
+                }
+                else
+                {
+                    return string.Empty;
+                }
             }
-   
+            //Finally it checks if there has been a draw
             if (playerOneValue == playerTwoValue)
             {
                 Label1.Text = "Draw";
@@ -121,11 +76,7 @@ namespace TopTrumps
             else
             {
                 return string.Empty;
-            }
-
-
-            
-            
+            }            
         }
 
 
@@ -152,6 +103,7 @@ namespace TopTrumps
             //Then makes it Player One's turn
             Session.Remove("whoseTurn");
             Session.Add("whoseTurn", "playerOne");
+            //This checks to see if Player Two has run out of cards and therefore Player One is the game winner as well
             if (playerTwoUpdate.Count == 0)
             {
                 return "playerOne";
@@ -159,9 +111,7 @@ namespace TopTrumps
             else
             {
                 return string.Empty;
-            }
-            
-            
+            }                     
         }
 
         private string PlayerTwoWins()
@@ -187,8 +137,15 @@ namespace TopTrumps
             //Then makes it Player Two's turn
             Session.Remove("whoseTurn");
             Session.Add("whoseTurn", "playerTwo");
-
-            return string.Empty;
+            //This checks to see if Player One has run out of cards and therefore Player Two is the game winner as well
+            if (playerOneUpdate.Count == 0)
+            {
+                return "playerTwo";
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         private string Draw()
@@ -233,6 +190,7 @@ namespace TopTrumps
 
         private string EnableButtons()
         {
+            //This enables the buttons once again
             playerOneButtonOne.Enabled = true;
             playerOneButtonOne.BackColor = System.Drawing.Color.Empty;
             playerOneButtonOne.ForeColor = System.Drawing.Color.Empty;
@@ -268,6 +226,7 @@ namespace TopTrumps
 
         private string EverythingVisible()
         {
+            //This puts all images and buttons visible again
             Image1.Visible = true;
             Image2.Visible = true;
             cardNamePlayerOne.Visible = true;
@@ -336,6 +295,7 @@ namespace TopTrumps
 
 
             //It then makes the non-player's cards invisible
+            //First checking Player One
             string turn = Session["whoseTurn"] as string;
             if (turn == "playerOne")
             {
@@ -348,6 +308,7 @@ namespace TopTrumps
                 playerTwoButtonFive.Visible = false;
             }
             else { }
+            //Then checking if it is Player Two
             if (turn == "playerTwo")
             {
                 Image1.Visible = false;
@@ -388,13 +349,16 @@ namespace TopTrumps
         protected void playerOneButtonOne_Click(object sender, EventArgs e)
         {
 
-            //Calls the mether CheckWHoHasWon - to see who the winner is
+            //Calls the mether CheckWHoHasWon
+            //This also checks if Player One is the overall winner
+            //NB It is not possible to be the active player and lose in Top Trumps
             string theWinner = CheckWhoHasWon(0);
             if (theWinner == "playerOne")
             {
                 string callMethod1 = DisableButtons();
                 string callMethod2 = EverythingVisible();
-                Label2.Text = "& PLAYER ONE WINS!!!!";
+                Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
             }
             else
             {
@@ -412,13 +376,13 @@ namespace TopTrumps
         protected void playerOneButtonTwo_Click(object sender, EventArgs e)
         {
 
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(1);
             if (theWinner == "playerOne")
             {
                 string callMethod1 = DisableButtons();
                 string callMethod2 = EverythingVisible();
-                Label2.Text = "& PLAYER ONE WINS!!!!";
+                Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
             }
             else
             {
@@ -431,117 +395,277 @@ namespace TopTrumps
                 nextCard.Visible = true;
             }
             
-
         }
 
         protected void playerOneButtonThree_Click(object sender, EventArgs e)
         {
 
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(2);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerOne")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
+
         }
 
         protected void playerOneButtonFour_Click(object sender, EventArgs e)
         {
 
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(3);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerOne")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
+
         }
 
         protected void playerOneButtonFive_Click(object sender, EventArgs e)
         {
 
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(4);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerOne")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
+
         }
 
         protected void playerTwoButtonOne_Click(object sender, EventArgs e)
         {
-            //Calls the mether CheckWHoHasWon - to see who the winner is
+            //Calls the mether CheckWHoHasWon
+            //This also checks if Player One is the overall winner
+            //NB It is not possible to be the active player and lose in Top Trumps
             string theWinner = CheckWhoHasWon(0);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonOne.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonOne.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonOne.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonOne.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerTwo")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonOne.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonOne.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonOne.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonOne.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
         }
 
         protected void playerTwoButtonTwo_Click(object sender, EventArgs e)
         {
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(1);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonTwo.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonTwo.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonTwo.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonTwo.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerTwo")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonTwo.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonTwo.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonTwo.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonTwo.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
         }
 
         protected void playerTwoButtonThree_Click(object sender, EventArgs e)
         {
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(2);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerTwo")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonThree.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonThree.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonThree.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonThree.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
         }
 
         protected void playerTwoButtonFour_Click(object sender, EventArgs e)
         {
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(3);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerTwo")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                playAgain.Visible = true;
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonFour.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
+                string callMethod3 = GameOver();
+            }
         }
 
         protected void playerTwoButtonFive_Click(object sender, EventArgs e)
         {
-            //Calls the mether CheckWHoHasWon - to see who the winner is
             string theWinner = CheckWhoHasWon(4);
-            string callMethod1 = DisableButtons();
-            string callMethod2 = EverythingVisible();
-            playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
-            playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
-            playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
-            playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
-            nextCard.Visible = true;
+            if (theWinner == "playerTwo")
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod3 = GameOver();
+            }
+            else
+            {
+                string callMethod1 = DisableButtons();
+                string callMethod2 = EverythingVisible();
+                playerOneButtonFive.BackColor = System.Drawing.Color.Yellow;
+                playerOneButtonFive.ForeColor = System.Drawing.Color.Black;
+                playerTwoButtonFive.BackColor = System.Drawing.Color.Yellow;
+                playerTwoButtonFive.ForeColor = System.Drawing.Color.Black;
+                nextCard.Visible = true;
+            }
+        }
+        private string GameOver()
+        {
+            playAgain.Visible = true;
+            return string.Empty;
+        }
+
+        private string RunGame()
+        {
+            //Hides next card as it only pops up when a card is selected
+            nextCard.Visible = false;
+            //Hides play again button as it only pops up when the game is over
+            playAgain.Visible = false;
+            //viewstates and sessions appear to be a way of saving variables so they can be used once an event handler is clicked!!!
+            //so would be created once a login has taken place as a way of recalling the user.
+
+            //creates an instance of the class DealCards
+            DealCards myCards = new DealCards();
+            //calls the method GenerateCards to create the random pack of 20
+            List<int> cards = myCards.GenerateCards();
+            //creates two lists for each player's cards
+            List<int> playerOneDeal = new List<int> { };
+            List<int> playerTwoDeal = new List<int> { };
+            //Then distributes the cards between Player1 and Player2
+            int loopNo = cards.Count - 1;
+            while (loopNo > -1)
+            {
+                playerOneDeal.Add(cards[loopNo]);
+                loopNo = loopNo - 1;
+                playerTwoDeal.Add(cards[loopNo]);
+                loopNo = loopNo - 1;
+            }
+
+            //Creates session variables playerOneHand that are populated by the lists of the same name
+            Session.Add("playerOneHand", playerOneDeal);
+            Session.Add("playerTwoHand", playerTwoDeal);
+            Session.Add("whoseTurn", "playerOne");
+
+            //This is the application data, and would in fact be in our azure tables.
+            List<string> category = new List<string> { "Animals", "Top Speed(mph)", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
+            List<string> cardOne = new List<string> { "1", "Monkey", "Picture", "1", "2", "3", "4", "5", "monkey.jpg" };
+            List<string> cardTwo = new List<string> { "2", "Kangaroo", "Picture", "5", "4", "3", "2", "1", "kangaroo.jpg" };
+            List<string> cardThree = new List<string> { "3", "Goat", "Picture", "1", "3", "5", "2", "4", "goat.jpg" };
+            List<string> cardFour = new List<string> { "4", "Elephant", "Picture", "1", "2", "3", "4", "5", "elephant.jpg" };
+            List<string> cardFive = new List<string> { "5", "Rabbit", "Picture", "5", "4", "3", "2", "1", "rabbit.jpg" };
+            List<string> cardSix = new List<string> { "6", "Giraffe", "Picture", "4", "5", "3", "2", "1", "giraffe.jpg" };
+            List<string> cardSeven = new List<string> { "7", "Hippo", "Picture", "1", "2", "3", "4", "5", "hippo.jpg" };
+            List<string> cardEight = new List<string> { "8", "Dog", "Picture", "5", "2", "4", "1", "3", "dog.jpg" };
+            List<string> cardNine = new List<string> { "9", "Sheep", "Picture", "5", "4", "3", "2", "1", "sheep.jpg" };
+            List<string> cardTen = new List<string> { "10", "Cow", "Picture", "1", "2", "3", "4", "5", "cow.jpg" };
+            List<string> cardEleven = new List<string> { "11", "Rhino", "Picture", "5", "4", "3", "2", "1", "rhino.jpg" };
+            List<string> cardTwelve = new List<string> { "12", "Shark", "Picture", "2", "3", "5", "1", "4", "shark.jpg" };
+            List<string> cardThirteen = new List<string> { "13", "Lion", "Picture", "1", "2", "3", "4", "5", "lion.jpg" };
+            List<string> cardFourteen = new List<string> { "14", "Horse", "Picture", "5", "4", "3", "2", "1", "horse.jpg" };
+            List<string> cardFifteen = new List<string> { "15", "Cat", "Picture", "4", "5", "1", "2", "3", "cat.jpg" };
+            List<string> cardSixteen = new List<string> { "16", "Mouse", "Picture", "1", "2", "3", "4", "5", "mouse.jpg" };
+            List<string> cardSeventeen = new List<string> { "17", "Crocodile", "Picture", "5", "4", "3", "2", "1", "crocodile.jpg" };
+            List<string> cardEighteen = new List<string> { "18", "Zebra", "Picture", "2", "3", "5", "4", "1", "zebra.jpg" };
+            List<string> cardNineteen = new List<string> { "19", "Penguin", "Picture", "1", "2", "3", "4", "5", "penguin.jpg" };
+            List<string> cardTwenty = new List<string> { "20", "Snake", "Picture", "5", "4", "3", "2", "1", "snake.jpg" };
+
+            //Then have a list of all the lists. So it is a list where each entry is itself a list
+            List<List<string>> allTheCards = new List<List<string>> { cardOne, cardTwo, cardThree, cardFour, cardFive, cardSix, cardSeven, cardEight, cardNine, cardTen, cardEleven, cardTwelve, cardThirteen, cardFourteen, cardFifteen, cardSixteen, cardSeventeen, cardEighteen, cardNineteen, cardTwenty };
+            Session.Add("allCards", allTheCards);
+            Session.Add("gameCategory", category);
+            gameName.Text = category[0];
+            //This calls the PopulateTheScreen method    
+            string callMethod = PopulateTheScreeen();
+            return string.Empty;
+        }
+
+        protected void playAgain_Click(object sender, EventArgs e)
+        {
+            playAgain.Visible = false;
+            Session.Remove("playerOneCard");
+            Session.Remove("playerTwoCard");
+            Session.Remove("playerOneHand");
+            Session.Remove("playerTwoHand");
+            Session.Remove("whoseTurn");
+            Session.Remove("allCards");
+            Session.Remove("gameCategory");
+            Label1.Visible = false;
+            Label2.Visible = false;
+            string method = EnableButtons();
+            string method1 = RunGame();
         }
     }
-
-
 }
 
