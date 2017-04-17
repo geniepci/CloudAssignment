@@ -39,11 +39,6 @@
             width: 274px;
             text-align: center;
         }
-        .auto-style20 {
-            height: 119px;
-            width: 274px;
-            text-align: center;
-        }
         .auto-style25 {
             width: 144px;
         }
@@ -53,10 +48,6 @@
         }
         .auto-style27 {
             height: 4px;
-            width: 144px;
-        }
-        .auto-style28 {
-            height: 119px;
             width: 144px;
         }
         .auto-style33 {
@@ -99,12 +90,6 @@
             background-color: #FFFFFF;
             text-align: center;
         }
-        .auto-style42 {
-            height: 119px;
-            width: 295px;
-            background-color: #FFFFFF;
-            text-align: center;
-        }
         .auto-style43 {
             width: 304px;
             background-color: #FFFFFF;
@@ -124,12 +109,6 @@
         }
         .auto-style46 {
             height: 4px;
-            width: 304px;
-            background-color: #FFFFFF;
-            text-align: center;
-        }
-        .auto-style47 {
-            height: 119px;
             width: 304px;
             background-color: #FFFFFF;
             text-align: center;
@@ -216,13 +195,12 @@
             </tr>
             <tr>
                 <td class="auto-style33">
-                </td>
+                    &nbsp;</td>
                 <td class="auto-style39">
                     <asp:Button ID="playerOneButtonOne" runat="server" Text="Button" Height="40px" Width="250px" OnClick="playerOneButtonOne_Click" />
                 </td>
                 <td class="auto-style35">
-                    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
-                </td>
+                    &nbsp;</td>
                 <td class="auto-style44">
                     <asp:Button ID="playerTwoButtonOne" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerTwoButtonOne_Click" />
                 </td>
@@ -230,7 +208,8 @@
                     &nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style25">&nbsp;</td>
+                <td class="auto-style25">
+                    &nbsp;</td>
                 <td class="auto-style38">
                     &nbsp;</td>
                 <td class="auto-style17">&nbsp;</td>
@@ -239,7 +218,8 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style25">&nbsp;</td>
+                <td class="auto-style25">
+                    &nbsp;</td>
                 <td class="auto-style38">
                     <asp:Button ID="playerOneButtonTwo" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerOneButtonTwo_Click" />
                 </td>
@@ -356,55 +336,11 @@
                     </td>
                 <td class="auto-style40">
                     </td>
-                <td class="auto-style18"></td>
-                <td class="auto-style45">
+                <td class="auto-style18">
                     </td>
-                <td class="auto-style10"></td>
-            </tr>
-            <tr>
-                <td class="auto-style25">
-                    &nbsp;</td>
-                <td class="auto-style38">
-                    &nbsp;</td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style43">
-                    &nbsp;</td>
-                <td class="auto-style11">
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style25">
-                    &nbsp;</td>
-                <td class="auto-style38">
-                    &nbsp;</td>
-                <td class="auto-style17">&nbsp;</td>
-                <td class="auto-style43">
-                    &nbsp;</td>
-                <td class="auto-style9">
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td class="auto-style25">
-                    &nbsp;</td>
-                <td class="auto-style38">
-                    &nbsp;</td>
-                <td class="auto-style17">
-                    &nbsp;</td>
-                <td class="auto-style43">
-                    &nbsp;</td>
+                <td class="auto-style45"></td>
                 <td class="auto-style10">
                     </td>
-            </tr>
-            <tr>
-                <td class="auto-style28">
-                    </td>
-                <td class="auto-style42">
-                    &nbsp;</td>
-                <td class="auto-style20">
-                    &nbsp;</td>
-                <td class="auto-style47"></td>
-                <td class="auto-style9">
-                    &nbsp;</td>
             </tr>
             <tr>
                 <td class="auto-style25">

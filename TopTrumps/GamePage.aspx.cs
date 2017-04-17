@@ -6,20 +6,22 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.WindowsAzure.Storage.Blob;
+
 namespace TopTrumps
 
 
 {
     public partial class GamePage : System.Web.UI.Page
     {
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
-    
                 string callMethod = RunGame();
-
+                //string callMethod1 = PopulateBlob("Category1-1");
             }
             else
             {
@@ -29,11 +31,9 @@ namespace TopTrumps
 
 
 
-
-
         private string CheckWhoHasWon(int selection)
         {
-            List<int> playerOneCard= Session["playerOneCard"] as List<int>;
+            List<int> playerOneCard = Session["playerOneCard"] as List<int>;
             int playerOneValue = playerOneCard[selection];
             List<int> playerTwoCard = Session["playerTwoCard"] as List<int>;
             int playerTwoValue = playerTwoCard[selection];
@@ -52,7 +52,7 @@ namespace TopTrumps
                 }
 
             }
-          
+
             //Then checks if Player Two is the winner
             if (playerOneValue < playerTwoValue)
             {
@@ -77,7 +77,7 @@ namespace TopTrumps
             else
             {
                 return string.Empty;
-            }            
+            }
         }
 
 
@@ -93,8 +93,8 @@ namespace TopTrumps
             playerOneUpdate.RemoveAt(0);
             playerTwoUpdate.RemoveAt(0);
             //Add each card to the back of playerOne's deck
-            playerOneUpdate.Add(firstCard);
             playerOneUpdate.Add(secondCard);
+            playerOneUpdate.Add(firstCard);
             //Cleans the playerOneHand and playerTwoHand sessions
             Session.Remove("playerOneHand");
             Session.Remove("playerTwoHand");
@@ -112,7 +112,7 @@ namespace TopTrumps
             else
             {
                 return string.Empty;
-            }                     
+            }
         }
 
         private string PlayerTwoWins()
@@ -127,8 +127,8 @@ namespace TopTrumps
             playerOneUpdate.RemoveAt(0);
             playerTwoUpdate.RemoveAt(0);
             //Add each card to the back of playerOne's deck
-            playerTwoUpdate.Add(secondCard);
             playerTwoUpdate.Add(firstCard);
+            playerTwoUpdate.Add(secondCard);
             //Cleans the playerOneHand and playerTwoHand sessions
             Session.Remove("playerOneHand");
             Session.Remove("playerTwoHand");
@@ -175,7 +175,7 @@ namespace TopTrumps
 
         private string DisableButtons()
         {
-            //This simply stops the buttons being clicked again once selected
+            //This simply stops the buttons being clicked again once a selection has been made
             playerOneButtonOne.Enabled = false;
             playerOneButtonTwo.Enabled = false;
             playerOneButtonThree.Enabled = false;
@@ -247,52 +247,41 @@ namespace TopTrumps
 
         private string PopulateTheScreeen()
         {
-            //This compares the identity number at the start of each card with the number in the Player's Hand 
-            //and then if there is a match it then takes the data needed.
+            //Starts by retrieving session data for the category, player one's hand and player two's hand
             List<string> theCategory = Session["gameCategory"] as List<string>;
             List<int> playerOneHand = Session["playerOneHand"] as List<int>;
             List<int> playerTwoHand = Session["playerTwoHand"] as List<int>;
-            List<List<string>> allCards = Session["allCards"] as List<List<string>>;
 
-            foreach (List<string> subList in allCards)
-            {
-                int checker = Convert.ToInt16(subList[0]);
-                if (checker == playerOneHand[0])
-                {
-                    Image1.ImageUrl = Convert.ToString(subList[8]);
-                    cardNamePlayerOne.Text = subList[1];
-                    playerOneButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
-                    playerOneButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
-                    playerOneButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
-                    playerOneButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(subList[6]);
-                    playerOneButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
-                    List<int> playerOneCard = new List<int> { Convert.ToInt16(subList[3]), Convert.ToInt16(subList[4]), Convert.ToInt16(subList[5]), Convert.ToInt16(subList[6]), Convert.ToInt16(subList[7]), };
-                    Session.Add("playerOneCard", playerOneCard);
+            //Creates card entities to get azure table data for the first number in each player's hand
+            CardEntity playerOneData = GetCardData(playerOneHand[0]);
+            CardEntity playerTwoData = GetCardData(playerTwoHand[0]);
 
+            //Then populates the page based on the data retrieved
+            cardNamePlayerOne.Text = Convert.ToString(playerOneData.Name);
+            playerOneButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(playerOneData.AttributeOne);
+            playerOneButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(playerOneData.AttributeTwo);
+            playerOneButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(playerOneData.AttributeThree);
+            playerOneButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(playerOneData.AttributeFour);
+            playerOneButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(playerOneData.AttributeFive);
+            //Next converts PartitionKey and RowKey into one variable to correspond with a named blob.
+            string imageOneID = Convert.ToString(playerOneData.PartitionKey) + "-" + Convert.ToString(playerOneData.RowKey);
+            //Then calls the method to obtain the blob image and put it into the image holder
+            string callMethod1 = PopulateBlob1(imageOneID);
+            //Finally creates a list of the five attributed ready to compare against player Two.
+            List<int> playerOneCard = new List<int> { Convert.ToInt16(playerOneData.AttributeOne), Convert.ToInt16(playerOneData.AttributeTwo), Convert.ToInt16(playerOneData.AttributeThree) , Convert.ToInt16(playerOneData.AttributeFour), Convert.ToInt16(playerOneData.AttributeFive)};
+            Session.Add("playerOneCard", playerOneCard);
 
-                }
-                else { }
-            }
-
-
-            //Then does the same for player two
-            foreach (List<string> subList in allCards)
-            {
-                int checker = Convert.ToInt16(subList[0]);
-                if (checker == playerTwoHand[0])
-                {
-                    Image2.ImageUrl = Convert.ToString(subList[8]);
-                    cardNamePlayerTwo.Text = subList[1];
-                    playerTwoButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(subList[3]);
-                    playerTwoButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(subList[4]);
-                    playerTwoButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(subList[5]);
-                    playerTwoButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(subList[6]);
-                    playerTwoButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(subList[7]);
-                    List<int> playerTwoCard = new List<int> { Convert.ToInt16(subList[3]), Convert.ToInt16(subList[4]), Convert.ToInt16(subList[5]), Convert.ToInt16(subList[6]), Convert.ToInt16(subList[7]), };
-                    Session.Add("playerTwoCard", playerTwoCard);
-                }
-                else { }
-            }
+            //Then does all the same again for player two's data.
+            cardNamePlayerTwo.Text = Convert.ToString(playerTwoData.Name);
+            playerTwoButtonOne.Text = theCategory[1] + "  |  " + Convert.ToString(playerTwoData.AttributeOne);
+            playerTwoButtonTwo.Text = theCategory[2] + "  |  " + Convert.ToString(playerTwoData.AttributeTwo);
+            playerTwoButtonThree.Text = theCategory[3] + "  |  " + Convert.ToString(playerTwoData.AttributeThree);
+            playerTwoButtonFour.Text = theCategory[4] + "  |  " + Convert.ToString(playerTwoData.AttributeFour);
+            playerTwoButtonFive.Text = theCategory[5] + "  |  " + Convert.ToString(playerTwoData.AttributeFive);
+            string imageTwoID = Convert.ToString(playerTwoData.PartitionKey) + "-" + Convert.ToString(playerTwoData.RowKey);
+            string callMethod2 = PopulateBlob2(imageTwoID);
+            List<int> playerTwoCard = new List<int> { Convert.ToInt16(playerTwoData.AttributeOne), Convert.ToInt16(playerTwoData.AttributeTwo), Convert.ToInt16(playerTwoData.AttributeThree), Convert.ToInt16(playerTwoData.AttributeFour), Convert.ToInt16(playerTwoData.AttributeFive) };
+            Session.Add("playerTwoCard", playerTwoCard);
 
 
             //It then makes the non-player's cards invisible
@@ -395,7 +384,7 @@ namespace TopTrumps
                 playerTwoButtonTwo.ForeColor = System.Drawing.Color.Black;
                 nextCard.Visible = true;
             }
-            
+
         }
 
         protected void playerOneButtonThree_Click(object sender, EventArgs e)
@@ -557,7 +546,7 @@ namespace TopTrumps
                 playerOneButtonFour.ForeColor = System.Drawing.Color.Black;
                 playerTwoButtonFour.BackColor = System.Drawing.Color.Yellow;
                 playerTwoButtonFour.ForeColor = System.Drawing.Color.Black;
-
+                nextCard.Visible = true;
             }
         }
 
@@ -596,7 +585,7 @@ namespace TopTrumps
             playAgain.Visible = false;
             //viewstates and sessions appear to be a way of saving variables so they can be used once an event handler is clicked!!!
             //so would be created once a login has taken place as a way of recalling the user.
-
+            string callMethod1 = GetCategoryData();
             //creates an instance of the class DealCards
             DealCards myCards = new DealCards();
             //calls the method GenerateCards to create the random pack of 20
@@ -619,34 +608,9 @@ namespace TopTrumps
             Session.Add("playerTwoHand", playerTwoDeal);
             Session.Add("whoseTurn", "playerOne");
 
-            //This is the application data, and would in fact be in our azure tables.
-            List<string> category = new List<string> { "Animals", "Top Speed(mph)", "Length(cm)", "Weight(kg)", "Food(kg/day)", "Lifespan" };
-            List<string> cardOne = new List<string> { "1", "Monkey", "Picture", "1", "2", "3", "4", "5", "monkey.jpg" };
-            List<string> cardTwo = new List<string> { "2", "Kangaroo", "Picture", "5", "4", "3", "2", "1", "kangaroo.jpg" };
-            List<string> cardThree = new List<string> { "3", "Goat", "Picture", "1", "3", "5", "2", "4", "goat.jpg" };
-            List<string> cardFour = new List<string> { "4", "Elephant", "Picture", "1", "2", "3", "4", "5", "elephant.jpg" };
-            List<string> cardFive = new List<string> { "5", "Rabbit", "Picture", "5", "4", "3", "2", "1", "rabbit.jpg" };
-            List<string> cardSix = new List<string> { "6", "Giraffe", "Picture", "4", "5", "3", "2", "1", "giraffe.jpg" };
-            List<string> cardSeven = new List<string> { "7", "Hippo", "Picture", "1", "2", "3", "4", "5", "hippo.jpg" };
-            List<string> cardEight = new List<string> { "8", "Dog", "Picture", "5", "2", "4", "1", "3", "dog.jpg" };
-            List<string> cardNine = new List<string> { "9", "Sheep", "Picture", "5", "4", "3", "2", "1", "sheep.jpg" };
-            List<string> cardTen = new List<string> { "10", "Cow", "Picture", "1", "2", "3", "4", "5", "cow.jpg" };
-            List<string> cardEleven = new List<string> { "11", "Rhino", "Picture", "5", "4", "3", "2", "1", "rhino.jpg" };
-            List<string> cardTwelve = new List<string> { "12", "Shark", "Picture", "2", "3", "5", "1", "4", "shark.jpg" };
-            List<string> cardThirteen = new List<string> { "13", "Lion", "Picture", "1", "2", "3", "4", "5", "lion.jpg" };
-            List<string> cardFourteen = new List<string> { "14", "Horse", "Picture", "5", "4", "3", "2", "1", "horse.jpg" };
-            List<string> cardFifteen = new List<string> { "15", "Cat", "Picture", "4", "5", "1", "2", "3", "cat.jpg" };
-            List<string> cardSixteen = new List<string> { "16", "Mouse", "Picture", "1", "2", "3", "4", "5", "mouse.jpg" };
-            List<string> cardSeventeen = new List<string> { "17", "Crocodile", "Picture", "5", "4", "3", "2", "1", "crocodile.jpg" };
-            List<string> cardEighteen = new List<string> { "18", "Zebra", "Picture", "2", "3", "5", "4", "1", "zebra.jpg" };
-            List<string> cardNineteen = new List<string> { "19", "Penguin", "Picture", "1", "2", "3", "4", "5", "penguin.jpg" };
-            List<string> cardTwenty = new List<string> { "20", "Snake", "Picture", "5", "4", "3", "2", "1", "snake.jpg" };
-
-            //Then have a list of all the lists. So it is a list where each entry is itself a list
-            List<List<string>> allTheCards = new List<List<string>> { cardOne, cardTwo, cardThree, cardFour, cardFive, cardSix, cardSeven, cardEight, cardNine, cardTen, cardEleven, cardTwelve, cardThirteen, cardFourteen, cardFifteen, cardSixteen, cardSeventeen, cardEighteen, cardNineteen, cardTwenty };
-            Session.Add("allCards", allTheCards);
-            Session.Add("gameCategory", category);
-            gameName.Text = category[0];
+            //Get the Category data and populate the screen with it
+            List<string> categoryData = Session["gameCategory"] as List<string>;
+            gameName.Text = categoryData[0];
             //This calls the PopulateTheScreen method    
             string callMethod = PopulateTheScreeen();
             return string.Empty;
@@ -654,6 +618,7 @@ namespace TopTrumps
 
         protected void playAgain_Click(object sender, EventArgs e)
         {
+
             Session.Remove("playerOneCard");
             Session.Remove("playerTwoCard");
             Session.Remove("playerOneHand");
@@ -666,6 +631,109 @@ namespace TopTrumps
             string method = EnableButtons();
             string method1 = RunGame();
         }
+
+
+        private string StorageConnectionString
+        {
+            get
+            {
+                //return "DefaultEndpointsProtocol=https;AccountName=b6039258storage;AccountKey=jOhJQMZO93hr7BuHGfnqdYQ93EauYbfyArfyJD/wKmwwyIwdCDb9XcohAn4lOz1baU0sVtEdH+J7Vg98Q/loeg==";
+                return "UseDevelopmentStorage=true";
+            }
+        }
+        private CloudTable GetTable(string tableName)
+        {
+            CloudStorageAccount gameStorage = CloudStorageAccount.Parse(StorageConnectionString);
+            CloudTableClient gameTable = gameStorage.CreateCloudTableClient();
+            CloudTable categoryTable = gameTable.GetTableReference(tableName);//This would be the table variable sent here!!!
+            return categoryTable;
+        }
+
+        private string GetCategoryData()
+        {
+
+            CloudTable getCategoryTable = GetTable("CategoryTable");
+            TableOperation retrieveData = TableOperation.Retrieve<CategoryEntity>("Category", "1");
+            TableResult retrieveResult = getCategoryTable.Execute(retrieveData);
+            CategoryEntity categoryData = (CategoryEntity)retrieveResult.Result;
+
+            List<string> category = new List<string> { };
+            category.Add(categoryData.Name);
+            category.Add(categoryData.AttributeNameOne);
+            category.Add(categoryData.AttributeNameTwo);
+            category.Add(categoryData.AttributeNameThree);
+            category.Add(categoryData.AttributeNameFour);
+            category.Add(categoryData.AttributeNameFive);
+            category.Add(categoryData.PartitionKey);
+            category.Add(categoryData.RowKey);
+            Session.Add("gameCategory", category);
+
+
+
+            return string.Empty;
+        }
+
+        private CardEntity GetCardData(int cardNumber)
+        {
+            List<string> category = Session["gameCategory"] as List<string>;
+            string partKey = category[6] + category[7];
+
+            CloudTable getCardTable = GetTable("CardTable");
+            TableOperation retrieveData = TableOperation.Retrieve<CardEntity>(partKey, Convert.ToString(cardNumber));
+            TableResult retrieveResult = getCardTable.Execute(retrieveData);
+            CardEntity cardData = (CardEntity)retrieveResult.Result;
+
+            return cardData;
+        }
+
+        private CloudBlobContainer GetImagesBlobContainer()
+        {
+            // Access cloud storage account. Uses connection string obtained above.
+            CloudStorageAccount myCloudStorgageAccount = CloudStorageAccount.Parse(StorageConnectionString);
+
+            // Create cloud table client. Provides access to Tables in your Storage Account 
+            CloudBlobClient myCloudBlobClient = myCloudStorgageAccount.CreateCloudBlobClient();
+
+            // Get Cloud Table for Message Table.
+            //CloudBlob myMessagesCloudBlob = myCloudBlobClient.GetBlobReference("MessagesTable");
+            CloudBlobContainer myMessagesCloudBlob = myCloudBlobClient.GetContainerReference("gameblobs");
+
+            // Create Messages Table if it does not already exist. 
+            myMessagesCloudBlob.CreateIfNotExists();
+
+            //The purpose of the this code is to make the images in your container publicly accessible. Without it you would not be able to see the images in your application or by using their URLs.
+            myMessagesCloudBlob.SetPermissions(new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
+
+
+            // Output Messages Cloud Table object. Provides the means of accessing the Messages Table.
+            return myMessagesCloudBlob;
+        }
+
+        
+ 
+        private string PopulateBlob1(string blobReference)
+        {
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
+            Image1.ImageUrl = myBlobIdentity.Uri.ToString();
+            return string.Empty;
+   
+            
+        }
+        private string PopulateBlob2(string blobReference)
+        {
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
+            Image2.ImageUrl = myBlobIdentity.Uri.ToString();
+            return string.Empty;
+
+
+        }
+
+
     }
 }
 
