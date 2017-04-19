@@ -17,6 +17,7 @@ namespace TopTrumps
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //This is needed to stop this code being called every time a button is clicked
             if (!IsPostBack)
             {
                 categoryList.Visible = false;
@@ -28,47 +29,25 @@ namespace TopTrumps
                 attributeFourTxtBox.Visible = false;
                 attributeFiveTxtBox.Visible = false;
                 chooseCategory.Visible = false;
-                Button3.Visible = false;
+                chooseCard.Visible = false;
+                Label12.Visible = false;
+                Label10.Visible = false;
                 blobUpload.Visible = false;
                 createCategory.Visible = false;
                 createCard.Visible = false;
+                updateCategory.Visible = false;
+                updateCard.Visible = false;
+                deleteCategory.Visible = false;
+                deleteCard.Visible = false;
                 categoryList.Items.Clear();
-                string method = ListAllCategories();
+
             }
-            //This is needed to stop this code being called every time a button is clicked
 
         }
 
-        protected void chooseOption_Click(object sender, EventArgs e)
-        {
-            if (optionList.SelectedValue == "1")
-            {
-                nameTxtBox.Visible = true;
-                attributeOneTxtBox.Visible = true;
-                attributeTwoTxtBox.Visible = true;
-                attributeThreeTxtBox.Visible = true;
-                attributeFourTxtBox.Visible = true;
-                attributeFiveTxtBox.Visible = true;
-                //blobUpload.Visible = true;
-                createCategory.Visible = true;
-                Label3.Text = "Category Name";
-                Label4.Text = "Name of First Attribute";
-                Label5.Text = "Name of Second Attribute";
-                Label6.Text = "Name of Third Attribute";
-                Label7.Text = "Name of Fourth Attribute";
-                Label8.Text = "Name of Fifth Attribute";
 
-            }
 
-            if (optionList.SelectedValue == "2")
-            {
-                categoryList.Visible = true;
-                chooseCategory.Visible = true;
-                Label10.Visible = true;
-            }
-        }
 
-       
 
 
 
@@ -86,17 +65,35 @@ namespace TopTrumps
         {
             CloudStorageAccount gameStorage = CloudStorageAccount.Parse(StorageConnectionString);
             CloudTableClient gameTable = gameStorage.CreateCloudTableClient();
-            CloudTable categoryTable = gameTable.GetTableReference(tableName);
-            return categoryTable;
+            CloudTable table = gameTable.GetTableReference(tableName);
+            table.CreateIfNotExists();
+            return table;
         }
 
         private string ListAllCategories()
         {
-            CloudTable getCardTable = GetTable("CategoryTable");
+            categoryList.Items.Clear();
+            CloudTable getCategoryTable = GetTable("CategoryTable");
             TableQuery<CategoryEntity> query = new TableQuery<CategoryEntity>();//Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, categoryPartKey));
-            foreach (CategoryEntity entity in getCardTable.ExecuteQuery(query))
+            foreach (CategoryEntity entity in getCategoryTable.ExecuteQuery(query))
             {
                 categoryList.Items.Add(Convert.ToString(entity.Name) + "-" + Convert.ToString(entity.PartitionKey) + "-" + Convert.ToString(entity.RowKey));
+
+            }
+
+            return string.Empty;
+        }
+
+
+
+        private string ListAllCards(string cardPartKey)
+        {
+            cardList.Items.Clear();
+            CloudTable getCardTable = GetTable("CardTable");
+            TableQuery<CategoryEntity> query = new TableQuery<CategoryEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, cardPartKey));
+            foreach (CategoryEntity entity in getCardTable.ExecuteQuery(query))
+            {
+                cardList.Items.Add(Convert.ToString(entity.Name) + "-" + Convert.ToString(entity.RowKey));
 
             }
 
@@ -153,34 +150,6 @@ namespace TopTrumps
 
         }
 
-        protected void chooseCategory_Click(object sender, EventArgs e)
-        {
-            if (categoryList.SelectedValue == "")
-            {
-                Label11.Text = "Please select a category";
-            }
-
-            else
-            {
-                string ashTest = categoryList.SelectedValue;
-                string[] ashTest1 = ashTest.Split('-');
-                Label3.Text = ashTest1[1];
-                Label4.Text = ashTest1[2];
-                //Label5.Text = ashTest1[2]
-                if (optionList.SelectedValue == "2")
-                {
-                    string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
-                    createCard.Visible = true;
-                    Label9.Text = "Card Image";
-                    blobUpload.Visible = true;
-                }
-            }
-
-
-
-
-        }
-
         private string populateCategoryTitles(string partKey, string rowKey)
         {
             CloudTable getCategoryTable = GetTable("CategoryTable");
@@ -192,7 +161,7 @@ namespace TopTrumps
             attributeThreeTxtBox.Visible = true;
             attributeFourTxtBox.Visible = true;
             attributeFiveTxtBox.Visible = true;
-            Label3.Text = "Name";
+            Label3.Text = "Card Name";
             Label4.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameOne;
             Label5.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameTwo;
             Label6.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameThree;
@@ -204,6 +173,231 @@ namespace TopTrumps
 
             return string.Empty;
         }
+
+        private string populateCategoryData(string partKey, string rowKey)
+        {
+            CloudTable getCategoryTable = GetTable("CategoryTable");
+            TableOperation retrieveOperation = TableOperation.Retrieve<CategoryEntity>(partKey, rowKey);
+            TableResult retrievedResult = getCategoryTable.Execute(retrieveOperation);
+            nameTxtBox.Visible = true;
+            attributeOneTxtBox.Visible = true;
+            attributeTwoTxtBox.Visible = true;
+            attributeThreeTxtBox.Visible = true;
+            attributeFourTxtBox.Visible = true;
+            attributeFiveTxtBox.Visible = true;
+            Label3.Text = "Category Name";
+            Label4.Text = "Name of First Attribute";
+            Label5.Text = "Name of Second Attribute";
+            Label6.Text = "Name of Third Attribute";
+            Label7.Text = "Name of Fourth Attribute";
+            Label8.Text = "Name of Fifth Attribute";
+            nameTxtBox.Text = ((CategoryEntity)retrievedResult.Result).Name;
+            attributeOneTxtBox.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameOne;
+            attributeTwoTxtBox.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameTwo;
+            attributeThreeTxtBox.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameThree;
+            attributeFourTxtBox.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameFour;
+            attributeFiveTxtBox.Text = ((CategoryEntity)retrievedResult.Result).AttributeNameFive;
+
+
+
+
+            return string.Empty;
+        }
+
+        private string populateCardData(string partKey, string rowKey)
+        {
+            CloudTable getCardTable = GetTable("CardTable");
+            TableOperation retrieveOperation = TableOperation.Retrieve<CardEntity>(partKey, rowKey);
+            TableResult retrievedResult = getCardTable.Execute(retrieveOperation);
+            nameTxtBox.Text = ((CardEntity)retrievedResult.Result).Name;
+            attributeOneTxtBox.Text = ((CardEntity)retrievedResult.Result).AttributeOne;
+            attributeTwoTxtBox.Text = ((CardEntity)retrievedResult.Result).AttributeTwo;
+            attributeThreeTxtBox.Text = ((CardEntity)retrievedResult.Result).AttributeThree;
+            attributeFourTxtBox.Text = ((CardEntity)retrievedResult.Result).AttributeFour;
+            attributeFiveTxtBox.Text = ((CardEntity)retrievedResult.Result).AttributeFive;
+            return string.Empty;
+        }
+
+
+        private string ClearTextBoxes()
+        {
+            attributeOneTxtBox.Text = string.Empty;
+            attributeTwoTxtBox.Text = string.Empty;
+            attributeThreeTxtBox.Text = string.Empty;
+            attributeFourTxtBox.Text = string.Empty;
+            attributeFiveTxtBox.Text = string.Empty;
+            nameTxtBox.Text = string.Empty;
+            return string.Empty;
+        }
+
+        private CloudBlobContainer GetImagesBlobContainer()
+        {
+            // Access cloud storage account. Uses connection string obtained above.
+            CloudStorageAccount myCloudStorgageAccount = CloudStorageAccount.Parse(StorageConnectionString);
+
+            // Create cloud table client. Provides access to Tables in your Storage Account 
+            CloudBlobClient myCloudBlobClient = myCloudStorgageAccount.CreateCloudBlobClient();
+
+            // Get Cloud Table for Message Table.
+            //CloudBlob myMessagesCloudBlob = myCloudBlobClient.GetBlobReference("MessagesTable");
+            CloudBlobContainer myMessagesCloudBlob = myCloudBlobClient.GetContainerReference("thegameblobs");
+
+            // Create Messages Table if it does not already exist. 
+            myMessagesCloudBlob.CreateIfNotExists();
+
+            //The purpose of the this code is to make the images in your container publicly accessible. Without it you would not be able to see the images in your application or by using their URLs.
+            myMessagesCloudBlob.SetPermissions(new BlobContainerPermissions
+            {
+                PublicAccess = BlobContainerPublicAccessType.Blob
+            });
+
+
+            // Output Messages Cloud Table object. Provides the means of accessing the Messages Table.
+            return myMessagesCloudBlob;
+        }
+
+        private string PopulateBlob1(string blobReference)
+        {
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
+            blobImage.ImageUrl = myBlobIdentity.Uri.ToString();
+            return string.Empty;
+
+        }
+
+
+        protected void chooseOption_Click(object sender, EventArgs e)
+        {
+            updateCard.Visible = false;
+            updateCategory.Visible = false;
+            createCard.Visible = false;
+            createCategory.Visible = false;
+
+
+            if (optionList.SelectedValue == "1")
+            {
+                nameTxtBox.Visible = true;
+                attributeOneTxtBox.Visible = true;
+                attributeTwoTxtBox.Visible = true;
+                attributeThreeTxtBox.Visible = true;
+                attributeFourTxtBox.Visible = true;
+                attributeFiveTxtBox.Visible = true;
+                //blobUpload.Visible = true;
+                createCategory.Visible = true;
+                Label3.Text = "Category Name";
+                Label4.Text = "Name of First Attribute";
+                Label5.Text = "Name of Second Attribute";
+                Label6.Text = "Name of Third Attribute";
+                Label7.Text = "Name of Fourth Attribute";
+                Label8.Text = "Name of Fifth Attribute";
+
+            }
+
+            if (optionList.SelectedValue == "2")
+            {
+                string method = ListAllCategories();
+                categoryList.Visible = true;
+                chooseCategory.Visible = true;
+                Label10.Visible = true;
+            }
+
+            if (optionList.SelectedValue == "3")
+            {
+                string method = ListAllCategories();
+                categoryList.Visible = true;
+                chooseCategory.Visible = true;
+                Label10.Visible = true;
+            }
+
+            if (optionList.SelectedValue == "4")
+            {
+                string method = ListAllCategories();
+                categoryList.Visible = true;
+                chooseCategory.Visible = true;
+                Label10.Visible = true;
+            }
+
+            if (optionList.SelectedValue == "5")
+            {
+                string method = ListAllCategories();
+                categoryList.Visible = true;
+                chooseCategory.Visible = true;
+                Label10.Visible = true;
+            }
+
+            if (optionList.SelectedValue == "6")
+            {
+                string method = ListAllCategories();
+                categoryList.Visible = true;
+                chooseCategory.Visible = true;
+                Label10.Visible = true;
+            }
+
+
+        }
+
+
+        protected void chooseCategory_Click(object sender, EventArgs e)
+        {
+            if (categoryList.SelectedValue == "")
+            {
+                Label11.Text = "Please select a category";
+            }
+
+            else
+            {
+                string ashTest = categoryList.SelectedValue;
+                string[] ashTest1 = ashTest.Split('-');
+                //Label5.Text = ashTest1[2]
+
+
+
+                if (optionList.SelectedValue == "2")
+                {
+                    string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
+                    createCard.Visible = true;
+                    Label9.Text = "Card Image";
+                    blobUpload.Visible = true;
+                }
+
+
+                if (optionList.SelectedValue == "3")
+                {
+                    string method = populateCategoryData(ashTest1[1], ashTest1[2]);
+                    updateCategory.Visible = true;
+                }
+
+                if (optionList.SelectedValue == "4")
+                {
+                    string method = ListAllCards(ashTest1[1] + ashTest1[2]);
+                    cardList.Visible = true;
+                    chooseCard.Visible = true;
+                    Label12.Visible = true;
+                }
+
+
+                if (optionList.SelectedValue == "5")
+                {
+                    string method = populateCategoryData(ashTest1[1], ashTest1[2]);
+                    deleteCategory.Visible = true;
+                }
+
+
+                if (optionList.SelectedValue == "6")
+                {
+                    string method = ListAllCards(ashTest1[1] + ashTest1[2]);
+                    cardList.Visible = true;
+                    chooseCard.Visible = true;
+                    Label12.Visible = true;
+
+                }
+
+
+
+
+            }
+        }
+
 
 
         protected void createCategory_Click(object sender, EventArgs e)
@@ -222,39 +416,16 @@ namespace TopTrumps
 
             int newRowKey = GetNextCategoryRowKey("Category");
             insertCategory.RowKey = Convert.ToString(newRowKey);
-
-
-
             // Get Cloud Table object for Messages Table.
             CloudTable myMessagesCloudTable = GetTable("CategoryTable");
-
             // Create Table Operation to insert new Message Entity.
             TableOperation insertOperation = TableOperation.Insert(insertCategory);
-
-
-
-            //New Photo Code
-            //if (PhotoUpload.HasFile)
-            //{
-            //    CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
-            //    CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(insertMessage.PartitionKey + "-" + insertMessage.RowKey);
-            //    myBlobIdentity.UploadFromStream(PhotoUpload.FileContent);
-            //    insertMessage.ImageURI = myBlobIdentity.Uri.ToString();
-            //}
-            //else
-            //{
-            //    insertMessage.ImageURI = string.Empty;
-            //}
-
             // Insert new message into Messages Table.
             myMessagesCloudTable.Execute(insertOperation);
 
-            // Update web form. Clear text boxes. Refresh messages list.
-            //txtAuthor.Text = string.Empty;
-            //txtMessage.Text = string.Empty;
-            //txtPartitionKey.Text = string.Empty;
-            //txtRowKey.Text = string.Empty;
-            //dataListMessages.DataBind();
+            // Clear the screen
+            string method = ClearTextBoxes();
+
 
 
         }
@@ -273,7 +444,8 @@ namespace TopTrumps
             insertCard.AttributeFive = attributeFiveTxtBox.Text;
             string ashTest = categoryList.SelectedValue;
             string[] ashTest1 = ashTest.Split('-');
-            insertCard.PartitionKey = ashTest1[1]+ashTest1[2];
+            string partKey = ashTest1[1] + ashTest1[2];
+            insertCard.PartitionKey = partKey;
 
             int newRowKey = GetNextCardRowKey(ashTest1[1] + ashTest1[2]);
             insertCard.RowKey = Convert.ToString(newRowKey);
@@ -286,30 +458,211 @@ namespace TopTrumps
             // Create Table Operation to insert new Message Entity.
             TableOperation insertOperation = TableOperation.Insert(insertCard);
 
-
-
-            //New Photo Code
-            //if (PhotoUpload.HasFile)
-            //{
-            //    CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
-            //    CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(insertMessage.PartitionKey + "-" + insertMessage.RowKey);
-            //    myBlobIdentity.UploadFromStream(PhotoUpload.FileContent);
-            //    insertMessage.ImageURI = myBlobIdentity.Uri.ToString();
-            //}
-            //else
-            //{
-            //    insertMessage.ImageURI = string.Empty;
-            //}
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(insertCard.PartitionKey + "-" + insertCard.RowKey);
+            myBlobIdentity.UploadFromStream(blobUpload.FileContent);
+            insertCard.ImageURI = myBlobIdentity.Uri.ToString();
 
             // Insert new message into Messages Table.
             myMessagesCloudTable.Execute(insertOperation);
 
-            // Update web form. Clear text boxes. Refresh messages list.
-            //txtAuthor.Text = string.Empty;
-            //txtMessage.Text = string.Empty;
-            //txtPartitionKey.Text = string.Empty;
-            //txtRowKey.Text = string.Empty;
-            //dataListMessages.DataBind();
+
+            // Clear the screen
+            string method = ClearTextBoxes();
+
+
+
+        }
+
+
+
+        protected void updateCategory_Click(object sender, EventArgs e)
+        {
+            string ashTest = categoryList.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            CloudTable myMessagesCloudTable = GetTable("CategoryTable");
+            // Create a retrieve operation that takes a category entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<CategoryEntity>(ashTest1[1], ashTest1[2]);
+            // Execute the operation.
+            TableResult retrievedResult = myMessagesCloudTable.Execute(retrieveOperation);
+            // Assign the result to a CustomerEntity object.
+            CategoryEntity updateEntity = (CategoryEntity)retrievedResult.Result;
+            // Transfer the textbox entries 
+            updateEntity.AttributeNameOne = attributeOneTxtBox.Text;
+            updateEntity.AttributeNameTwo = attributeTwoTxtBox.Text;
+            updateEntity.AttributeNameThree = attributeThreeTxtBox.Text;
+            updateEntity.AttributeNameFour = attributeFourTxtBox.Text;
+            updateEntity.AttributeNameFive = attributeFiveTxtBox.Text;
+            updateEntity.Name = nameTxtBox.Text;
+
+            // Create the Replace TableOperation.
+            TableOperation updateOperation = TableOperation.Replace(updateEntity);
+
+            // Execute the operation.
+            myMessagesCloudTable.Execute(updateOperation);
+            // Clear the screen
+            string method = ClearTextBoxes();
+
+
+        }
+
+
+        protected void chooseCard_Click(object sender, EventArgs e)
+        {
+            string ashTest = categoryList.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
+
+
+            string ashTry = cardList.SelectedValue;
+            string[] ashTry1 = ashTry.Split('-');
+
+            string method1 = populateCardData(ashTest1[1] + ashTest1[2], ashTry1[1]);
+            string imageOneID = ashTest1[1] + ashTest1[2] + "-" + ashTry1[1];
+            //Then calls the method to obtain the blob image and put it into the image holder
+            string callMethod1 = PopulateBlob1(imageOneID);
+
+            if(optionList.SelectedValue == "4")
+            {
+                updateCard.Visible = true;
+                blobUpload.Visible = true;
+            }
+
+            if (optionList.SelectedValue == "6")
+            {
+                deleteCard.Visible = true;
+                blobUpload.Visible = true;
+            }
+
+
+        }
+
+
+
+        protected void updateCard_Click(object sender, EventArgs e)
+        {
+ 
+            string ashTest = categoryList.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
+
+            string ashTry = cardList.SelectedValue;
+            string[] ashTry1 = ashTry.Split('-');
+            CloudTable myMessagesCloudTable = GetTable("CardTable");
+            // Create a retrieve operation that takes a category entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<CardEntity>(ashTest1[1] + ashTest1[2], ashTry1[1]);
+            // Execute the operation.
+            TableResult retrievedResult = myMessagesCloudTable.Execute(retrieveOperation);
+            // Assign the result to a CustomerEntity object.
+            CardEntity updateEntity = (CardEntity)retrievedResult.Result;
+            // Transfer the textbox entries 
+            updateEntity.AttributeOne = attributeOneTxtBox.Text;
+            updateEntity.AttributeTwo = attributeTwoTxtBox.Text;
+            updateEntity.AttributeThree = attributeThreeTxtBox.Text;
+            updateEntity.AttributeFour = attributeFourTxtBox.Text;
+            updateEntity.AttributeFive = attributeFiveTxtBox.Text;
+            updateEntity.Name = nameTxtBox.Text;
+
+
+
+            if (blobUpload.HasFile)
+            {
+                CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+                CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(ashTest1[1] + ashTest1[2] + "-" + ashTry1[1]);
+                myBlobIdentity.Delete();
+                myBlobIdentity.UploadFromStream(blobUpload.FileContent);
+            }
+
+            // Create the Replace TableOperation.
+            TableOperation updateOperation = TableOperation.Replace(updateEntity);
+
+            // Execute the operation.
+            myMessagesCloudTable.Execute(updateOperation);
+
+            // Clear the screen
+            string method1 = ClearTextBoxes();
+            
+
+
+        }
+
+        protected void deleteCategory_Click(object sender, EventArgs e)
+        {
+            string ashTest = categoryList.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            CloudTable myMessagesCloudTable = GetTable("CategoryTable");
+            // Create a retrieve operation that takes a category entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<CategoryEntity>(ashTest1[1], ashTest1[2]);
+            // Execute the operation.
+            TableResult retrievedResult = myMessagesCloudTable.Execute(retrieveOperation);
+            // Assign the result to a CustomerEntity object.
+            CategoryEntity updateEntity = (CategoryEntity)retrievedResult.Result;
+            // Create the Delete TableOperation.
+            TableOperation deleteOperation = TableOperation.Delete(updateEntity);
+            // Execute the operation.
+            myMessagesCloudTable.Execute(deleteOperation);
+
+
+
+  
+            CloudTable getCategoryTable = GetTable("CardTable");
+            TableQuery<CardEntity> query = new TableQuery<CardEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ashTest1[1] + ashTest1[2]));
+            foreach (CardEntity entity in getCategoryTable.ExecuteQuery(query))
+            {
+                CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+                CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(entity.PartitionKey + "-" + entity.RowKey);
+                myBlobIdentity.Delete();
+                // Create the Replace TableOperation.
+                TableOperation deleteOperation1 = TableOperation.Delete(entity);
+                // Execute the operation.
+                getCategoryTable.Execute(deleteOperation1);
+
+            }
+
+
+
+            // Clear the screen
+            string method = ClearTextBoxes();
+
+
+                   
+
+
+
+        }
+
+        protected void deleteCard_Click(object sender, EventArgs e)
+        {
+            string ashTest = categoryList.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
+
+            string ashTry = cardList.SelectedValue;
+            string[] ashTry1 = ashTry.Split('-');
+            CloudTable myMessagesCloudTable = GetTable("CardTable");
+            // Create a retrieve operation that takes a category entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<CardEntity>(ashTest1[1] + ashTest1[2], ashTry1[1]);
+            // Execute the operation.
+            TableResult retrievedResult = myMessagesCloudTable.Execute(retrieveOperation);
+            // Assign the result to a CustomerEntity object.
+            CardEntity updateEntity = (CardEntity)retrievedResult.Result;
+
+
+
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(ashTest1[1] + ashTest1[2] + "-" + ashTry1[1]);
+            myBlobIdentity.Delete();
+
+
+            // Create the Replace TableOperation.
+            TableOperation deleteOperation = TableOperation.Delete(updateEntity);
+
+            // Execute the operation.
+            myMessagesCloudTable.Execute(deleteOperation);
+
+            // Clear the screen
+            string method1 = ClearTextBoxes();
+
 
 
         }

@@ -20,11 +20,6 @@
             width: 236px;
             background-color: #FFFFFF;
         }
-        .auto-style11 {
-            height: 4px;
-            width: 236px;
-            background-color: #FFFFFF;
-        }
         .auto-style17 {
             width: 274px;
             text-align: center;
@@ -122,6 +117,9 @@
             color: #0000FF;
             text-decoration: underline;
         }
+        .auto-style49 {
+            margin-left: 0px;
+        }
     </style>
 </head>
 <body>
@@ -167,6 +165,7 @@
                 <td class="auto-style17">
                     <asp:Label ID="Label1" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
                     <asp:Label ID="Label2" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
+                    <asp:ListBox ID="ListBox3" runat="server" CssClass="auto-style49" Height="250px" Width="200px"></asp:ListBox>
                 </td>
                 <td class="auto-style43">
                     <asp:Image ID="Image2" runat="server" Height="250px" Width="250px" />
@@ -190,7 +189,7 @@
                 <td class="auto-style25">&nbsp;</td>
                 <td class="auto-style38">&nbsp;</td>
                 <td class="auto-style17">
-                    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+                    <asp:Button ID="Button1" runat="server" Height="29px" OnClick="Button1_Click" Text="Choose Your Game" />
                 </td>
                 <td class="auto-style43">&nbsp;</td>
                 <td>&nbsp;</td>
@@ -202,9 +201,7 @@
                     <asp:Button ID="playerOneButtonOne" runat="server" Text="Button" Height="40px" Width="250px" OnClick="playerOneButtonOne_Click" />
                 </td>
                 <td class="auto-style35">
-                    <asp:DropDownList ID="DropDownList1" runat="server">
-                    </asp:DropDownList>
-                </td>
+                    &nbsp;</td>
                 <td class="auto-style44">
                     <asp:Button ID="playerTwoButtonOne" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerTwoButtonOne_Click" />
                 </td>

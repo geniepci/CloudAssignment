@@ -31,6 +31,15 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
+        
+        /// <summary>
         /// optionList control.
         /// </summary>
         /// <remarks>
@@ -76,13 +85,13 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Button chooseCategory;
         
         /// <summary>
-        /// Button3 control.
+        /// chooseCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button chooseCard;
         
         /// <summary>
         /// Label11 control.
@@ -110,6 +119,15 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox nameTxtBox;
+        
+        /// <summary>
+        /// blobImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image blobImage;
         
         /// <summary>
         /// Label4 control.
@@ -211,15 +229,6 @@ namespace TopTrumps {
         protected global::System.Web.UI.WebControls.Label Label9;
         
         /// <summary>
-        /// blobImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image blobImage;
-        
-        /// <summary>
         /// blobUpload control.
         /// </summary>
         /// <remarks>
@@ -227,6 +236,42 @@ namespace TopTrumps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload blobUpload;
+        
+        /// <summary>
+        /// deleteCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button deleteCategory;
+        
+        /// <summary>
+        /// deleteCard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button deleteCard;
+        
+        /// <summary>
+        /// updateCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button updateCategory;
+        
+        /// <summary>
+        /// updateCard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button updateCard;
         
         /// <summary>
         /// createCard control.

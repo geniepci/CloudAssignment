@@ -20,11 +20,10 @@ namespace TopTrumps
         {
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
-                string callMethod = RunGame();
-                int callMethod1 = GetNextCardRowKey("Category1");
-                List<int> callMethod2 = GetListOfCardRowKeys("Category1");
 
-                Label3.Text = Convert.ToString(callMethod1);
+
+                string method = ListAllCategories();
+                string method2 = HideButtons();
                 
             }
             else
@@ -33,11 +32,44 @@ namespace TopTrumps
             }
         }
 
+
+        private string ListAllCategories()
+        {
+            ListBox3.Items.Clear();
+            CloudTable getCategoryTable = GetTable("CategoryTable");
+            TableQuery<CategoryEntity> query = new TableQuery<CategoryEntity>();//Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, categoryPartKey));
+            foreach (CategoryEntity entity in getCategoryTable.ExecuteQuery(query))
+            {
+                ListBox3.Items.Add(Convert.ToString(entity.Name) + "-" + Convert.ToString(entity.PartitionKey) + "-" + Convert.ToString(entity.RowKey));
+
+            }
+
+            return string.Empty;
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            ListBox3.Visible = false;
+            Button1.Visible = false;
+            string callMethod = EverythingVisible();
+            string callMethod1 = RunGame();
+            string ashTest = ListBox3.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            int callMethod2 = GetNextCardRowKey(ashTest1[1] + ashTest1[2]);
+            List<int> callMethod3 = GetListOfCardRowKeys(ashTest1[1] + ashTest1[2]);
+        }
+
+
+
+
+
         private List<int> GenerateCards()
         {
             //This effectively 'shuffles' the cards so they can be allocated between the players
             //It starts by getting a list of all the rowkeys for the selected category 
-            List<int> rowKeys = GetListOfCardRowKeys("Category1");
+            string ashTest = ListBox3.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            List<int> rowKeys = GetListOfCardRowKeys(ashTest1[1] + ashTest1[2]);
             //Then it counts them
             int rowKeyTotal = rowKeys.Count;
             //Then creates two new rows a cards row to store the random numbers generated
@@ -234,6 +266,26 @@ namespace TopTrumps
             return string.Empty;
         }
 
+        private string HideButtons()
+        {
+            //This simply stops the buttons being clicked again once a selection has been made
+            playerOneButtonOne.Visible= false;
+            playerOneButtonTwo.Visible = false;
+            playerOneButtonThree.Visible= false;
+            playerOneButtonFour.Visible= false;
+            playerOneButtonFive.Visible = false;
+            playerTwoButtonOne.Visible = false;
+            playerTwoButtonTwo.Visible = false;
+            playerTwoButtonThree.Visible = false;
+            playerTwoButtonFour.Visible = false;
+            playerTwoButtonFive.Visible = false;
+            nextCard.Visible = false;
+            playAgain.Visible = false;
+            ListBox1.Visible = false;
+            ListBox2.Visible = false;
+            return string.Empty;
+        }
+
         private string EnableButtons()
         {
             //This enables the buttons once again
@@ -287,6 +339,8 @@ namespace TopTrumps
             playerTwoButtonThree.Visible = true;
             playerTwoButtonFour.Visible = true;
             playerTwoButtonFive.Visible = true;
+            ListBox1.Visible = true;
+            ListBox2.Visible = true;
             return string.Empty;
         }
 
@@ -630,8 +684,12 @@ namespace TopTrumps
             {
                 playerOneDeal.Add(cards[loopNo]);
                 loopNo = loopNo - 1;
-                playerTwoDeal.Add(cards[loopNo]);
-                loopNo = loopNo - 1;
+                if (loopNo > -1)
+                {
+                    playerTwoDeal.Add(cards[loopNo]);
+                    loopNo = loopNo - 1;
+                }
+
             }
 
             //Creates session variables playerOneHand that are populated by the lists of the same name
@@ -684,7 +742,9 @@ namespace TopTrumps
         {
 
             CloudTable getCategoryTable = GetTable("CategoryTable");
-            TableOperation retrieveData = TableOperation.Retrieve<CategoryEntity>("Category", "1");
+            string ashTest = ListBox3.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            TableOperation retrieveData = TableOperation.Retrieve<CategoryEntity>(ashTest1[1], ashTest1[2]);
             TableResult retrieveResult = getCategoryTable.Execute(retrieveData);
             CategoryEntity categoryData = (CategoryEntity)retrieveResult.Result;
 
@@ -724,7 +784,7 @@ namespace TopTrumps
 
             // Get Cloud Table for Message Table.
             //CloudBlob myMessagesCloudBlob = myCloudBlobClient.GetBlobReference("MessagesTable");
-            CloudBlobContainer myMessagesCloudBlob = myCloudBlobClient.GetContainerReference("gameblobs");
+            CloudBlobContainer myMessagesCloudBlob = myCloudBlobClient.GetContainerReference("thegameblobs");
 
             // Create Messages Table if it does not already exist. 
             myMessagesCloudBlob.CreateIfNotExists();
@@ -769,7 +829,7 @@ namespace TopTrumps
             foreach (CardEntity entity in getCardTable.ExecuteQuery(query))
             {
                 outcome.Add(Convert.ToInt16(entity.RowKey));
-                DropDownList1.Items.Add(Convert.ToString(entity.Name));
+
             }
 
             if (outcome.Count == 0)
@@ -795,7 +855,7 @@ namespace TopTrumps
             foreach (CardEntity entity in getCardTable.ExecuteQuery(query))
             {
                 outcome.Add(Convert.ToInt16(entity.RowKey));
-                DropDownList1.Items.Add(Convert.ToString(entity.RowKey));
+
             }
             return outcome;
             

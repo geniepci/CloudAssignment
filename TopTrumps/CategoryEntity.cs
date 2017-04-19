@@ -37,6 +37,7 @@ namespace TopTrumps
         public string AttributeThree { get; set; }
         public string AttributeFour { get; set; }
         public string AttributeFive { get; set; }
+        public string ImageURI { get; set; }
 
     }
 }
