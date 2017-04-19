@@ -10,8 +10,8 @@ namespace TopTrumps
     {
         public CategoryEntity()
         {
-            RowKey = Guid.NewGuid().ToString();
-            PartitionKey = "P1";
+            RowKey = "";
+            PartitionKey = "";
 
         }
         public string Name { get; set; }
@@ -26,8 +26,8 @@ namespace TopTrumps
     {
         public CardEntity()
             {
-                RowKey = Guid.NewGuid().ToString();
-                PartitionKey = "P1";
+                RowKey = "";
+                PartitionKey = "";
 
             }
         public string Number { get; set; }

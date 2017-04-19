@@ -131,7 +131,7 @@
                 <td class="auto-style25">&nbsp;</td>
                 <td class="auto-style38">&nbsp;</td>
                 <td class="auto-style48" colspan="1">TOP TRUMPS</td>
-                <td class="auto-style43">&nbsp;</td>
+                <td class="auto-style43" rowspan="1">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -189,7 +189,9 @@
             <tr>
                 <td class="auto-style25">&nbsp;</td>
                 <td class="auto-style38">&nbsp;</td>
-                <td class="auto-style17">&nbsp;</td>
+                <td class="auto-style17">
+                    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+                </td>
                 <td class="auto-style43">&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -200,7 +202,9 @@
                     <asp:Button ID="playerOneButtonOne" runat="server" Text="Button" Height="40px" Width="250px" OnClick="playerOneButtonOne_Click" />
                 </td>
                 <td class="auto-style35">
-                    &nbsp;</td>
+                    <asp:DropDownList ID="DropDownList1" runat="server">
+                    </asp:DropDownList>
+                </td>
                 <td class="auto-style44">
                     <asp:Button ID="playerTwoButtonOne" runat="server" Height="40px" Text="Button" Width="250px" OnClick="playerTwoButtonOne_Click" />
                 </td>
