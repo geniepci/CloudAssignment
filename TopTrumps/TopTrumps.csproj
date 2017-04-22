@@ -123,10 +123,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DeveloperPage.aspx" />
+    <Content Include="HighScores.aspx" />
+    <Content Include="HomePage.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="OptionsPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="WebForm1.aspx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -136,10 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GamePage.aspx" />
+    <Content Include="Players.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cards.cs" />
     <Compile Include="CategoryEntity.cs" />
     <Compile Include="DeveloperPage.aspx.cs">
       <DependentUpon>DeveloperPage.aspx</DependentUpon>
@@ -155,7 +160,49 @@
     <Compile Include="GamePage.aspx.designer.cs">
       <DependentUpon>GamePage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="HighScores.aspx.cs">
+      <DependentUpon>HighScores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HighScores.aspx.designer.cs">
+      <DependentUpon>HighScores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomePage.aspx.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomePage.aspx.designer.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OptionsPage.aspx.cs">
+      <DependentUpon>OptionsPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OptionsPage.aspx.designer.cs">
+      <DependentUpon>OptionsPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Players.aspx.cs">
+      <DependentUpon>Players.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Players.aspx.designer.cs">
+      <DependentUpon>Players.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

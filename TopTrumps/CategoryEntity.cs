@@ -20,6 +20,7 @@ namespace TopTrumps
         public string AttributeNameThree { get; set; }
         public string AttributeNameFour { get; set; }
         public string AttributeNameFive { get; set; }
+        public string ImageURI { get; set; }
     }
 
     public class CardEntity : TableEntity
@@ -37,6 +38,26 @@ namespace TopTrumps
         public string AttributeThree { get; set; }
         public string AttributeFour { get; set; }
         public string AttributeFive { get; set; }
+        public string ImageURI { get; set; }
+
+    }
+
+    public class PlayersEntity : TableEntity
+    {
+        public PlayersEntity()
+        {
+            // For simplicity make the RowKey globally unique
+            RowKey = "";
+
+            // Although not used here, cannot be left as null
+            PartitionKey = "P1";
+        }
+
+        public string PlayerName { get; set; }
+        public string Age { get; set; }
+        public string Wins { get; set; }
+        public string Losses { get; set; }
+        public string Games { get; set; }
         public string ImageURI { get; set; }
 
     }

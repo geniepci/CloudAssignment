@@ -22,23 +22,12 @@ namespace TopTrumps
             {
                 categoryList.Visible = false;
                 cardList.Visible = false;
-                nameTxtBox.Visible = false;
-                attributeOneTxtBox.Visible = false;
-                attributeTwoTxtBox.Visible = false;
-                attributeThreeTxtBox.Visible = false;
-                attributeFourTxtBox.Visible = false;
-                attributeFiveTxtBox.Visible = false;
-                chooseCategory.Visible = false;
-                chooseCard.Visible = false;
+
+
                 Label12.Visible = false;
                 Label10.Visible = false;
-                blobUpload.Visible = false;
-                createCategory.Visible = false;
-                createCard.Visible = false;
-                updateCategory.Visible = false;
-                updateCard.Visible = false;
-                deleteCategory.Visible = false;
-                deleteCard.Visible = false;
+
+                string method = HideBoxesAndButtons();
                 categoryList.Items.Clear();
 
             }
@@ -47,6 +36,45 @@ namespace TopTrumps
 
 
 
+
+        private string HideBoxesAndButtons()
+        {
+            categoryList.Visible = false;
+            cardList.Visible = false;
+            chooseCategory.Visible = false;
+            chooseCard.Visible = false;
+            createCategory.Visible = false;
+            createCard.Visible = false;
+            updateCategory.Visible = false;
+            updateCard.Visible = false;
+            deleteCategory.Visible = false;
+            deleteCard.Visible = false;
+            nameTxtBox.Visible = false;
+            nameTxtBox.Text = "";
+            attributeOneTxtBox.Visible = false;
+            attributeOneTxtBox.Text = "";
+            attributeTwoTxtBox.Visible = false;
+            attributeTwoTxtBox.Text = "";
+            attributeThreeTxtBox.Visible = false;
+            attributeThreeTxtBox.Text = "";
+            attributeFourTxtBox.Visible = false;
+            attributeFourTxtBox.Text = "";
+            attributeFiveTxtBox.Visible = false;
+            attributeFiveTxtBox.Text = "";
+            blobUpload.Visible = false;
+            blobImage.Visible = false;
+            Label3.Text = "";
+            Label4.Text = "";
+            Label5.Text = "";
+            Label6.Text = "";
+            Label7.Text = "";
+            Label8.Text = "";
+            Label9.Text = "";
+            Label10.Visible = false;
+            Label11.Text = "";
+            Label12.Visible = false;
+            return string.Empty;
+        }
 
 
 
@@ -268,10 +296,12 @@ namespace TopTrumps
 
         protected void chooseOption_Click(object sender, EventArgs e)
         {
+            Label13.Visible = false;
             updateCard.Visible = false;
             updateCategory.Visible = false;
             createCard.Visible = false;
             createCategory.Visible = false;
+            string methoda = HideBoxesAndButtons();
 
 
             if (optionList.SelectedValue == "1")
@@ -282,7 +312,7 @@ namespace TopTrumps
                 attributeThreeTxtBox.Visible = true;
                 attributeFourTxtBox.Visible = true;
                 attributeFiveTxtBox.Visible = true;
-                //blobUpload.Visible = true;
+                blobUpload.Visible = true;
                 createCategory.Visible = true;
                 Label3.Text = "Category Name";
                 Label4.Text = "Name of First Attribute";
@@ -290,6 +320,7 @@ namespace TopTrumps
                 Label6.Text = "Name of Third Attribute";
                 Label7.Text = "Name of Fourth Attribute";
                 Label8.Text = "Name of Fifth Attribute";
+                Label9.Text = "Select Category Image";
 
             }
 
@@ -323,6 +354,7 @@ namespace TopTrumps
                 categoryList.Visible = true;
                 chooseCategory.Visible = true;
                 Label10.Visible = true;
+
             }
 
             if (optionList.SelectedValue == "6")
@@ -339,6 +371,7 @@ namespace TopTrumps
 
         protected void chooseCategory_Click(object sender, EventArgs e)
         {
+            Label13.Visible = false;
             if (categoryList.SelectedValue == "")
             {
                 Label11.Text = "Please select a category";
@@ -380,6 +413,8 @@ namespace TopTrumps
                 {
                     string method = populateCategoryData(ashTest1[1], ashTest1[2]);
                     deleteCategory.Visible = true;
+                    Label11.Visible = true;
+                    Label11.Text = "Warning - Deleting a Category Also Deletes All Category Cards";
                 }
 
 
@@ -416,16 +451,25 @@ namespace TopTrumps
 
             int newRowKey = GetNextCategoryRowKey("Category");
             insertCategory.RowKey = Convert.ToString(newRowKey);
+
+
             // Get Cloud Table object for Messages Table.
             CloudTable myMessagesCloudTable = GetTable("CategoryTable");
             // Create Table Operation to insert new Message Entity.
             TableOperation insertOperation = TableOperation.Insert(insertCategory);
+
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(insertCategory.PartitionKey + "-" + insertCategory.RowKey);
+            myBlobIdentity.UploadFromStream(blobUpload.FileContent);
+            insertCategory.ImageURI = myBlobIdentity.Uri.ToString();
+
             // Insert new message into Messages Table.
             myMessagesCloudTable.Execute(insertOperation);
 
             // Clear the screen
             string method = ClearTextBoxes();
-
+            Label13.Visible = true;
+            Label13.Text = "Category Created";
 
 
         }
@@ -469,8 +513,8 @@ namespace TopTrumps
 
             // Clear the screen
             string method = ClearTextBoxes();
-
-
+            Label13.Visible = true;
+            Label13.Text = "Card Created";
 
         }
 
@@ -502,13 +546,14 @@ namespace TopTrumps
             myMessagesCloudTable.Execute(updateOperation);
             // Clear the screen
             string method = ClearTextBoxes();
-
-
+            Label13.Visible = true;
+            Label13.Text = "Category Created";
         }
 
 
         protected void chooseCard_Click(object sender, EventArgs e)
         {
+            Label13.Visible = false;
             string ashTest = categoryList.SelectedValue;
             string[] ashTest1 = ashTest.Split('-');
             string method = populateCategoryTitles(ashTest1[1], ashTest1[2]);
@@ -521,17 +566,17 @@ namespace TopTrumps
             string imageOneID = ashTest1[1] + ashTest1[2] + "-" + ashTry1[1];
             //Then calls the method to obtain the blob image and put it into the image holder
             string callMethod1 = PopulateBlob1(imageOneID);
-
+            blobImage.Visible = true;
+            blobUpload.Visible = true;
             if(optionList.SelectedValue == "4")
             {
                 updateCard.Visible = true;
-                blobUpload.Visible = true;
+
             }
 
             if (optionList.SelectedValue == "6")
             {
                 deleteCard.Visible = true;
-                blobUpload.Visible = true;
             }
 
 
@@ -581,7 +626,12 @@ namespace TopTrumps
 
             // Clear the screen
             string method1 = ClearTextBoxes();
-            
+            blobImage.ImageUrl="";
+            blobImage.Visible = false;
+            cardList.Items.Clear();
+            string method2 = ListAllCards(ashTest1[1] + ashTest1[2]);
+            Label13.Visible = true;
+            Label13.Text = "Card Updated";
 
 
         }
@@ -604,7 +654,7 @@ namespace TopTrumps
 
 
 
-  
+            //Once category is gone the associated cards and blobs need to go too they are also deleted
             CloudTable getCategoryTable = GetTable("CardTable");
             TableQuery<CardEntity> query = new TableQuery<CardEntity>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ashTest1[1] + ashTest1[2]));
             foreach (CardEntity entity in getCategoryTable.ExecuteQuery(query))
@@ -623,8 +673,10 @@ namespace TopTrumps
 
             // Clear the screen
             string method = ClearTextBoxes();
-
-
+            categoryList.Items.Clear();
+            string method2 = ListAllCategories();
+            Label13.Visible = true;
+            Label13.Text = "Category Deleted";
                    
 
 
@@ -662,9 +714,40 @@ namespace TopTrumps
 
             // Clear the screen
             string method1 = ClearTextBoxes();
-
+            blobImage.Visible = false;
+            cardList.Items.Clear();
+            string method2 = ListAllCards(ashTest1[1] + ashTest1[2]);
+            Label13.Visible = true;
+            Label13.Text = "Card Deleted";
 
 
         }
+
+        public IEnumerable<CardEntity> GetCategories()
+        {
+
+            // Get Cloud Table object for Messages Table.
+            CloudTable myPlayersCloudTable = GetTable("CardTable");
+
+
+            // Create a Table Query object.
+            TableQuery<CardEntity> myTableQuery = new TableQuery<CardEntity>();
+
+
+            // Get list from Messages Table.
+            IEnumerable<CardEntity> messagesList =
+            myPlayersCloudTable.ExecuteQuery(myTableQuery);
+
+
+            // Sort in reverse chronological order.
+            messagesList = messagesList.OrderByDescending(msg => msg.Timestamp);
+
+            // Output to data list on web form.
+            return messagesList;
+
+        }
+
     }
+
+
 }

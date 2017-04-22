@@ -120,6 +120,16 @@
         .auto-style49 {
             margin-left: 0px;
         }
+        .auto-style50 {
+            width: 304px;
+            background-color: #FFFFFF;
+            text-align: right;
+        }
+        .auto-style51 {
+            width: 295px;
+            background-color: #FFFFFF;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -127,9 +137,13 @@
         <table class="auto-style1">
             <tr>
                 <td class="auto-style25">&nbsp;</td>
-                <td class="auto-style38">&nbsp;</td>
+                <td class="auto-style51">
+                    <asp:Image ID="Image3" runat="server" Height="125px" Width="125px" />
+                </td>
                 <td class="auto-style48" colspan="1">TOP TRUMPS</td>
-                <td class="auto-style43" rowspan="1">&nbsp;</td>
+                <td class="auto-style50" rowspan="1">
+                    <asp:Image ID="Image4" runat="server" Height="125px" Width="125px" />
+                </td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -166,6 +180,8 @@
                     <asp:Label ID="Label1" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
                     <asp:Label ID="Label2" runat="server" Font-Size="X-Large" ForeColor="Red"></asp:Label>
                     <asp:ListBox ID="ListBox3" runat="server" CssClass="auto-style49" Height="250px" Width="200px"></asp:ListBox>
+                    <asp:ListBox ID="ListBox4" runat="server" CssClass="auto-style49" Height="250px" Width="200px"></asp:ListBox>
+                    <asp:ListBox ID="ListBox5" runat="server" CssClass="auto-style49" Height="250px" Width="200px"></asp:ListBox>
                 </td>
                 <td class="auto-style43">
                     <asp:Image ID="Image2" runat="server" Height="250px" Width="250px" />
@@ -190,6 +206,9 @@
                 <td class="auto-style38">&nbsp;</td>
                 <td class="auto-style17">
                     <asp:Button ID="Button1" runat="server" Height="29px" OnClick="Button1_Click" Text="Choose Your Game" />
+                    <asp:Button ID="Button2" runat="server" Height="29px" OnClick="Button2_Click" Text="Choose Player One" />
+                    <br />
+                    <asp:Button ID="Button3" runat="server" Height="29px" OnClick="Button3_Click" Text="Choose Player Two" />
                 </td>
                 <td class="auto-style43">&nbsp;</td>
                 <td>&nbsp;</td>

@@ -44,6 +44,7 @@
         .auto-style28 {
             font-size: xx-large;
             color: #0000FF;
+            font-family: Arial, Helvetica, sans-serif;
         }
         .auto-style32 {
             height: 46px;
@@ -153,15 +154,97 @@
             width: 405px;
             text-align: right;
         }
+    
+.Menu
+{
+	float: left;
+	font-size: 80%;
+	margin: 0;
+	margin-left: 3px;
+	padding: 0;
+	text-align: center;
+}
+
+a.MenuLink
+{
+    text-decoration: none;
+}
+
+a.MenuLink
+{
+	background: #ede7f8;
+	border-top: 1px solid #FFFFFF;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #FFFFFF;
+	color: #666666;
+	float: left;
+	margin: 0px;
+	padding: 5px 0px;
+	margin-left: 5px;
+	text-align: center;
+	text-decoration: none;
+	width: 120px;
+	
+	-moz-border-radius-topright: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-top-left-radius: 10px;
+}
+
+a
+{
+    color: #0066B3;
+    background: inherit;
+}
+
+a.ActiveLink
+{
+    background: #ffffff;
+	border-top: 1px solid #FFFFFF;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #FFFFFF;
+	color: #666666;
+	float: left;
+	margin: 0px;
+	padding: 5px 0px;
+	margin-left: 5px;
+	text-align: center;
+	text-decoration: none;
+	width: 120px;
+	
+    -moz-border-radius-topright: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	border-top-left-radius: 10px;
+}
+
+        .auto-style72 {
+            color: #0000FF;
+        }
+
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
+        <div>
+    
+         <div class="Menu">
+                <a href="#" class="MenuLink">Home</a>
+                <a href="GamePage.aspx" class="MenuLink">GamePage</a>
+                <a href="http://localhost:50032/guest.aspx" class="MenuLink">Guest</a>
+                <a href="http://localhost:50032/course_booking.aspx" class="ActiveLink">Course Booking</a>
+                <a href="http://localhost:50032/accommodation.aspx" class="MenuLink">Accommodation</a>
+                <a href="http://localhost:50032/staff.aspx" class="MenuLink">Staff</a>
+                
+            </div>
+
+
+                    </div>
         <table class="auto-style1" id="bob">
             <tr>
                 <td class="auto-style62"></td>
                 <td class="auto-style65"></td>
-                <td class="auto-style27"><span class="auto-style28">TOP</span> <span class="auto-style28">TRUMPS DEVELOPER </span></td>
+                <td class="auto-style27"><span class="auto-style28"><strong>TOP</strong></span> <span class="auto-style28"><strong>TRUMPS DEVELOPER </strong> </span></td>
                 <td class="auto-style63"></td>
                 <td class="auto-style64"></td>
             </tr>
@@ -215,7 +298,7 @@
                 <td class="auto-style20">
                     &nbsp;</td>
                 <td class="auto-style69">
-                    <asp:Label ID="Label11" runat="server"></asp:Label>
+                    <asp:Label ID="Label11" runat="server" ForeColor="Red"></asp:Label>
                 </td>
                 <td class="auto-style49">&nbsp;</td>
                 <td class="auto-style57">&nbsp;</td>
@@ -308,7 +391,8 @@
                 <td class="auto-style37">
                     &nbsp;</td>
                 <td class="auto-style71">
-                    &nbsp;</td>
+                    <asp:Label ID="Label13" runat="server" CssClass="auto-style72"></asp:Label>
+                </td>
                 <td class="auto-style52">&nbsp;</td>
                 <td class="auto-style60">&nbsp;</td>
             </tr>
@@ -340,6 +424,10 @@
             </tr>
         </table>
     <div>
+    
+        <asp:DataList ID="DataList1" runat="server" DataSourceID="ObjectDataSource1">
+        </asp:DataList>
+        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server"></asp:ObjectDataSource>
     
     </div>
     </form>

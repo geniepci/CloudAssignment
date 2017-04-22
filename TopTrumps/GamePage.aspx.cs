@@ -20,11 +20,16 @@ namespace TopTrumps
         {
             if (!IsPostBack)//This is needed to stop this code being called every time a button is clicked
             {
-
+                //Need to count the cards to see if there are enough
+                //Need to count the players to see if there are enough too
 
                 string method = ListAllCategories();
                 string method2 = HideButtons();
-                
+                ListBox4.Visible = false;
+                ListBox5.Visible = false;
+                Button2.Visible = false;
+                Button3.Visible = false;
+                //List<string> method3 = ListAllCards();
             }
             else
             {
@@ -38,25 +43,194 @@ namespace TopTrumps
             ListBox3.Items.Clear();
             CloudTable getCategoryTable = GetTable("CategoryTable");
             TableQuery<CategoryEntity> query = new TableQuery<CategoryEntity>();//Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, categoryPartKey));
+            
             foreach (CategoryEntity entity in getCategoryTable.ExecuteQuery(query))
             {
-                ListBox3.Items.Add(Convert.ToString(entity.Name) + "-" + Convert.ToString(entity.PartitionKey) + "-" + Convert.ToString(entity.RowKey));
+                ListBox3.Items.Add(Convert.ToString(entity.Name) + "...................................................." + "-" + (Convert.ToString(entity.PartitionKey)) + "-" + Convert.ToString(entity.RowKey));
+               
+            }
+            
+
+            return string.Empty;
+        }
+
+        private List<string> ListAllCards()
+        {
+            ListBox3.Items.Clear();
+            CloudTable getCategoryTable = GetTable("CardTable");
+            TableQuery<CardEntity> query = new TableQuery<CardEntity>();//Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, categoryPartKey));
+            List<string> categories = new List<string> { };
+            foreach (CardEntity entity in getCategoryTable.ExecuteQuery(query))
+            {
+                categories.Add(Convert.ToString(entity.Timestamp) + entity.ImageURI);
+                ListBox3.Items.Add(Convert.ToString(entity.Timestamp)); 
 
             }
+
+            categories.Sort();
+            categories.Reverse();
+            foreach (string t in categories)
+            {
+                ListBox3.Items.Add(t);
+            }
+
+            int dave = ListBox3.SelectedIndex;
+
+
+            return categories;
+        }
+
+        private string ListAllPlayers()
+        {
+            CloudTable getCategoryTable = GetTable("PlayerTable");
+            TableQuery<PlayersEntity> query = new TableQuery<PlayersEntity>();//Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, categoryPartKey));
+
+            foreach (PlayersEntity entity in getCategoryTable.ExecuteQuery(query))
+            {
+                ListBox4.Items.Add(Convert.ToString(entity.PlayerName) +"...................................................." + "-" + (Convert.ToString(entity.PartitionKey)) + "-" + Convert.ToString(entity.RowKey));
+                ListBox5.Items.Add(Convert.ToString(entity.PlayerName) + "...................................................." + "-" + (Convert.ToString(entity.PartitionKey)) + "-" + Convert.ToString(entity.RowKey));
+
+            }
+
 
             return string.Empty;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            Label1.Visible = true;
+            Label1.Text = Convert.ToString(ListBox3.SelectedIndex);
             ListBox3.Visible = false;
             Button1.Visible = false;
+            string method = ListAllPlayers();
+            ListBox4.Visible = true;
+            Button2.Visible = true;
+
+
+
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            ListBox4.Visible = false;
+            Button2.Visible = false;
+            ListBox5.Visible = true;
+            Button3.Visible = true;
+
+
+
+
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            ListBox5.Visible = false;
+            Button3.Visible = false;
+            string ashTest = ListBox4.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+
+
+
+
+
+            //THESE ARE THE GAME METHODS
             string callMethod = EverythingVisible();
             string callMethod1 = RunGame();
-            string ashTest = ListBox3.SelectedValue;
-            string[] ashTest1 = ashTest.Split('-');
-            int callMethod2 = GetNextCardRowKey(ashTest1[1] + ashTest1[2]);
-            List<int> callMethod3 = GetListOfCardRowKeys(ashTest1[1] + ashTest1[2]);
+            string ashleyTest = ListBox3.SelectedValue;
+            string[] ashleyTest1 = ashleyTest.Split('-');
+            int callMethod2 = GetNextCardRowKey(ashleyTest1[1] + ashleyTest1[2]);
+            List<int> callMethod3 = GetListOfCardRowKeys(ashleyTest1[1] + ashTest1[2]);
+
+
+        }
+
+        private List<string> getPlayerDetails(string partKey, string rowKey)
+        {
+
+
+            CloudTable getCategoryTable = GetTable("PlayerTable");
+            TableOperation retrieveData = TableOperation.Retrieve<PlayersEntity>(partKey, rowKey);
+            TableResult retrieveResult = getCategoryTable.Execute(retrieveData);
+            PlayersEntity playerData = (PlayersEntity)retrieveResult.Result;
+            List<string> playerDetails = new List<string> { playerData.PlayerName, playerData.Wins, playerData.Losses, playerData.PartitionKey, playerData.RowKey, playerData.Games}; 
+
+
+            return playerDetails;
+        }
+
+        private string updatePlayerDetails(string winner)
+        {
+            if (winner == "playerOne")
+            {
+                List<string> playerOneDetails = Session["playerOneDetails"] as List<string>;
+                List<string> playerTwoDetails = Session["playerTwoDetails"] as List<string>;
+                int playerOneWins = Convert.ToInt16(playerOneDetails[1]) + 1;
+                int playerOneLosses = Convert.ToInt16(playerOneDetails[2]);
+                int playerTwoWins = Convert.ToInt16(playerTwoDetails[1]);
+                int playerTwoLosses = Convert.ToInt16(playerTwoDetails[2]) + 1;
+                int playerOneGames = Convert.ToInt16(playerOneDetails[5]) + 1;
+                int playerTwoGames = Convert.ToInt16(playerTwoDetails[5]) + 1;
+                string playerOnePartKey = playerOneDetails[3];
+                string playerOneRowKey = playerOneDetails[4];
+                string playerTwoPartKey = playerTwoDetails[3];
+                string playerTwoRowKey = playerTwoDetails[4];
+                string method = updatePlayerTable(playerOneWins, playerOneLosses, playerOnePartKey, playerOneRowKey, playerOneGames);
+                string method1 = updatePlayerTable(playerTwoWins, playerTwoLosses, playerTwoPartKey, playerTwoRowKey, playerTwoGames);
+
+                return string.Empty;
+
+            }
+
+
+            if (winner == "playerTwo")
+            {
+                List<string> playerOneDetails = Session["playerOneDetails"] as List<string>;
+                List<string> playerTwoDetails = Session["playerTwoDetails"] as List<string>;
+                int playerOneWins = Convert.ToInt16(playerOneDetails[1]);
+                int playerOneLosses = Convert.ToInt16(playerOneDetails[2]) +1;
+                int playerTwoWins = Convert.ToInt16(playerTwoDetails[1]) +1;
+                int playerTwoLosses = Convert.ToInt16(playerTwoDetails[2]);
+                int playerOneGames = Convert.ToInt16(playerOneDetails[5]) +1;
+                int playerTwoGames = Convert.ToInt16(playerTwoDetails[5]) +1;
+                string playerOnePartKey = playerOneDetails[3];
+                string playerOneRowKey = playerOneDetails[4];
+                string playerTwoPartKey = playerTwoDetails[3];
+                string playerTwoRowKey = playerTwoDetails[4];
+
+                string method = updatePlayerTable(playerOneWins, playerOneLosses, playerOnePartKey, playerOneRowKey, playerOneGames);
+                string method1 = updatePlayerTable(playerTwoWins, playerTwoLosses, playerTwoPartKey, playerTwoRowKey, playerTwoGames);
+
+                return string.Empty;
+
+            }
+
+            return string.Empty;
+        }
+
+        private string updatePlayerTable(int playerWins, int playerLosses, string playerPartKey, string playerRowKey, int playerGames)
+        {
+
+            CloudTable myMessagesCloudTable = GetTable("PlayerTable");
+            // Create a retrieve operation that takes a category entity.
+            TableOperation retrieveOperation = TableOperation.Retrieve<PlayersEntity>(playerPartKey, playerRowKey);
+            // Execute the operation.
+            TableResult retrievedResult = myMessagesCloudTable.Execute(retrieveOperation);
+            // Assign the result to a CustomerEntity object.
+            PlayersEntity updateEntity = (PlayersEntity)retrievedResult.Result;
+
+            updateEntity.Wins = Convert.ToString(playerWins);
+            updateEntity.Losses = Convert.ToString(playerLosses);
+            updateEntity.Games = Convert.ToString(playerGames);
+
+
+            // Create the Replace TableOperation.
+            TableOperation updateOperation = TableOperation.Replace(updateEntity);
+
+            // Execute the operation.
+            myMessagesCloudTable.Execute(updateOperation);
+
+
+            return string.Empty;
         }
 
 
@@ -458,6 +632,7 @@ namespace TopTrumps
             {
 
                 Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
                 string callMethod3 = GameOver();
             }
             else
@@ -481,6 +656,8 @@ namespace TopTrumps
             if (theWinner == "playerOne")
             {
                 Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -502,6 +679,8 @@ namespace TopTrumps
             if (theWinner == "playerOne")
             {
                 Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -523,6 +702,8 @@ namespace TopTrumps
             if (theWinner == "playerOne")
             {
                 Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -544,6 +725,8 @@ namespace TopTrumps
             if (theWinner == "playerOne")
             {
                 Label2.Text = "& PLAYER ONE IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -568,6 +751,8 @@ namespace TopTrumps
             if (theWinner == "playerTwo")
             {
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -588,6 +773,8 @@ namespace TopTrumps
             if (theWinner == "playerTwo")
             {
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -608,6 +795,8 @@ namespace TopTrumps
             if (theWinner == "playerTwo")
             {
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -628,6 +817,8 @@ namespace TopTrumps
             if (theWinner == "playerTwo")
             {
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -649,6 +840,8 @@ namespace TopTrumps
             if (theWinner == "playerTwo")
             {
                 Label2.Text = "& PLAYER TWO IS VICTORIOUS!!!!";
+                string callMethod4 = updatePlayerDetails(theWinner);
+
                 string callMethod3 = GameOver();
             }
             else
@@ -702,6 +895,17 @@ namespace TopTrumps
             gameName.Text = categoryData[0];
             //This calls the PopulateTheScreen method    
             string callMethod = PopulateTheScreeen();
+            string ashTest = ListBox4.SelectedValue;
+            string[] ashTest1 = ashTest.Split('-');
+            string method = PopulateBlob3(Convert.ToString(ashTest1[1]) + "-" + Convert.ToString(ashTest1[2]));
+            string ashTest0 = ListBox5.SelectedValue;
+            string[] ashTest2 = ashTest0.Split('-');
+            string method1 = PopulateBlob4(Convert.ToString(ashTest2[1]) + "-" + Convert.ToString(ashTest2[2]));
+            List<string> playerOneDetails = getPlayerDetails(Convert.ToString(ashTest1[1]), Convert.ToString(ashTest1[2]));
+            Session.Add("playerOneDetails", playerOneDetails);
+            List<string> playerTwoDetails = getPlayerDetails(Convert.ToString(ashTest2[1]), Convert.ToString(ashTest2[2]));
+            Session.Add("playerTwoDetails", playerTwoDetails);
+
             return string.Empty;
         }
 
@@ -816,6 +1020,26 @@ namespace TopTrumps
             CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
             CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
             Image2.ImageUrl = myBlobIdentity.Uri.ToString();
+            return string.Empty;
+
+
+        }
+
+        private string PopulateBlob3(string blobReference)
+        {
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
+            Image3.ImageUrl = myBlobIdentity.Uri.ToString();
+            return string.Empty;
+
+
+        }
+
+        private string PopulateBlob4(string blobReference)
+        {
+            CloudBlobContainer myBlobContainer = GetImagesBlobContainer();
+            CloudBlockBlob myBlobIdentity = myBlobContainer.GetBlockBlobReference(blobReference);
+            Image4.ImageUrl = myBlobIdentity.Uri.ToString();
             return string.Empty;
 
 
