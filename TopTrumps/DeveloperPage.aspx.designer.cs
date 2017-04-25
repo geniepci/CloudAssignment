@@ -10,7 +10,7 @@
 namespace TopTrumps {
     
     
-    public partial class GamePage {
+    public partial class DeveloperPage {
         
         /// <summary>
         /// form1 control.
@@ -22,264 +22,300 @@ namespace TopTrumps {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Image3 control.
+        /// Label10 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image3;
+        protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
-        /// Image4 control.
+        /// Label12 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image4;
+        protected global::System.Web.UI.WebControls.Label Label12;
         
         /// <summary>
-        /// gameName control.
+        /// optionList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label gameName;
+        protected global::System.Web.UI.WebControls.ListBox optionList;
         
         /// <summary>
-        /// ListBox1 control.
+        /// categoryList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox1;
+        protected global::System.Web.UI.WebControls.ListBox categoryList;
         
         /// <summary>
-        /// Image1 control.
+        /// cardList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.ListBox cardList;
         
         /// <summary>
-        /// Label1 control.
+        /// chooseOption control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Button chooseOption;
         
         /// <summary>
-        /// Label2 control.
+        /// chooseCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Button chooseCategory;
         
         /// <summary>
-        /// ListBox3 control.
+        /// chooseCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox3;
+        protected global::System.Web.UI.WebControls.Button chooseCard;
         
         /// <summary>
-        /// ListBox4 control.
+        /// Label11 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox4;
+        protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
-        /// ListBox5 control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox5;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
-        /// Image2 control.
+        /// nameTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image2;
+        protected global::System.Web.UI.WebControls.TextBox nameTxtBox;
         
         /// <summary>
-        /// ListBox2 control.
+        /// blobImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox ListBox2;
+        protected global::System.Web.UI.WebControls.Image blobImage;
         
         /// <summary>
-        /// cardNamePlayerOne control.
+        /// Label4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label cardNamePlayerOne;
+        protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// cardNamePlayerTwo control.
+        /// attributeOneTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label cardNamePlayerTwo;
+        protected global::System.Web.UI.WebControls.TextBox attributeOneTxtBox;
         
         /// <summary>
-        /// Button1 control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// Button2 control.
+        /// attributeTwoTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.TextBox attributeTwoTxtBox;
         
         /// <summary>
-        /// Button3 control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// playerOneButtonOne control.
+        /// attributeThreeTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerOneButtonOne;
+        protected global::System.Web.UI.WebControls.TextBox attributeThreeTxtBox;
         
         /// <summary>
-        /// playerTwoButtonOne control.
+        /// Label7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerTwoButtonOne;
+        protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// playerOneButtonTwo control.
+        /// attributeFourTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerOneButtonTwo;
+        protected global::System.Web.UI.WebControls.TextBox attributeFourTxtBox;
         
         /// <summary>
-        /// playerTwoButtonTwo control.
+        /// Label8 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerTwoButtonTwo;
+        protected global::System.Web.UI.WebControls.Label Label8;
         
         /// <summary>
-        /// playerOneButtonThree control.
+        /// attributeFiveTxtBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerOneButtonThree;
+        protected global::System.Web.UI.WebControls.TextBox attributeFiveTxtBox;
         
         /// <summary>
-        /// playerTwoButtonThree control.
+        /// Label9 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerTwoButtonThree;
+        protected global::System.Web.UI.WebControls.Label Label9;
         
         /// <summary>
-        /// playerOneButtonFour control.
+        /// blobUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerOneButtonFour;
+        protected global::System.Web.UI.WebControls.FileUpload blobUpload;
         
         /// <summary>
-        /// playerTwoButtonFour control.
+        /// Label13 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerTwoButtonFour;
+        protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// playerOneButtonFive control.
+        /// deleteCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerOneButtonFive;
+        protected global::System.Web.UI.WebControls.Button deleteCategory;
         
         /// <summary>
-        /// nextCard control.
+        /// deleteCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button nextCard;
+        protected global::System.Web.UI.WebControls.Button deleteCard;
         
         /// <summary>
-        /// playAgain control.
+        /// updateCategory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playAgain;
+        protected global::System.Web.UI.WebControls.Button updateCategory;
         
         /// <summary>
-        /// playerTwoButtonFive control.
+        /// updateCard control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button playerTwoButtonFive;
+        protected global::System.Web.UI.WebControls.Button updateCard;
+        
+        /// <summary>
+        /// createCard control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createCard;
+        
+        /// <summary>
+        /// createCategory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button createCategory;
+        
+        /// <summary>
+        /// DataList1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataList DataList1;
+        
+        /// <summary>
+        /// ObjectDataSource1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ObjectDataSource1;
     }
 }
